@@ -16,6 +16,26 @@
     <url-pattern>/webapp/greet</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>logLevel</servlet-name>
+    <servlet-class>com.zxgj.logadmin.server.LogLevelServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>logLevel</servlet-name>
+    <url-pattern>/webapp/loglevel</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>secLog</servlet-name>
+    <servlet-class>com.zxgj.logadmin.server.SECLogServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>secLog</servlet-name>
+    <url-pattern>/webapp/seclog</url-pattern>
+  </servlet-mapping>
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>webapp.html</welcome-file>

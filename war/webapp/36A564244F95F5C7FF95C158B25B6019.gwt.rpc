@@ -2,7 +2,9 @@
 com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true, true, true, true, com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533, 3936916533
 com.google.gwt.user.client.rpc.RpcTokenException, true, true, false, false, com.google.gwt.user.client.rpc.RpcTokenException/2345075298, 2345075298
 com.google.gwt.user.client.rpc.XsrfToken, false, false, true, true, com.google.gwt.user.client.rpc.XsrfToken/4254043109, 4254043109
-com.zxgj.logadmin.client.GreetingService, false, false, false, false, _, 956919268
+com.zxgj.logadmin.client.LogLevelService, false, false, false, false, _, 3046346986
+com.zxgj.logadmin.shared.EPARecord, true, true, false, false, com.zxgj.logadmin.shared.EPARecord/900917863, 900917863
+[Lcom.zxgj.logadmin.shared.EPARecord;, true, true, false, false, [Lcom.zxgj.logadmin.shared.EPARecord;/2593343419, 2593343419
 java.lang.Exception, true, false, true, false, java.lang.Exception/1920171873, 1920171873
 java.lang.IllegalArgumentException, true, true, false, false, java.lang.IllegalArgumentException/1755012560, 1755012560
 java.lang.NumberFormatException, true, true, false, false, java.lang.NumberFormatException/3305228476, 3305228476

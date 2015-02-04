@@ -1,0 +1,54 @@
+package com.zxgj.logadmin.server;
+
+import java.util.List;
+
+
+
+
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.zxgj.logadmin.client.SECLogService;
+import com.zxgj.logadmin.shared.SECMsgKeyValue;
+
+
+@SuppressWarnings("serial")
+public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogService {
+
+	private static String urlString = "http://localhost:8983/solr"; 		
+   	
+        
+	@Override
+	public SECMsgKeyValue[] getMegKeyValues() throws IllegalArgumentException {
+//		    SECMsgKeyValue[] msgKeyValues=null;  
+//		    SolrServer solr = new HttpSolrServer(urlString);
+//		    SolrQuery query = new SolrQuery();
+//	        
+//	        //query facet
+//	        query.setQuery("*:*");
+//	        query.addFacetField(ZXGJParserHelper.secLineMessageKeyCodeValueField);
+//	        QueryResponse response = null;
+//	        try {
+//				response = solr.query(query);
+//			} catch (SolrServerException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//	        
+//	        List<FacetField> cat = response.getFacetFields();
+//	        System.out.println("facet fields length is:"+cat.size());
+//	        for(FacetField key: cat){
+//	     	   System.out.println("key is "+key.getName()+",value is:"+key.getValueCount());
+//	     	   List<Count> values = key.getValues();
+//		       msgKeyValues = new SECMsgKeyValue[values.size()];
+//		       int index = 0;
+//	     	   for(Count c : values){
+//	     		       SECMsgKeyValue keyValue = new SECMsgKeyValue(c.getName(),c.getCount());
+//	     			   System.out.println(c.getName()+":"+c.getCount());
+//	     			   msgKeyValues[index++]=keyValue;
+//	     	   }
+//	        }
+//        
+//	        return msgKeyValues; 
+		return null;
+	}
+
+}
