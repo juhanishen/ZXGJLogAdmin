@@ -4,6 +4,7 @@ import com.zxgj.logadmin.client.zxgj.ZXGJEPACommentPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJEPAEventPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJEPSMainPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJKnowledgePanel;
+import com.zxgj.logadmin.client.zxgj.ZXGJSECMainPanel;
 import com.zxgj.logadmin.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -46,8 +47,8 @@ public class webapp implements EntryPoint {
 	  
 	    TabPanel tp = new TabPanel();
 		
-//		ZXGJSECMainPanel secMainPanel = new ZXGJSECMainPanel();
-//		secMainPanel.createMsgKeyValueTable();
+		ZXGJSECMainPanel secMainPanel = new ZXGJSECMainPanel();
+		secMainPanel.createMsgKeyValueTable();
 		
 		ZXGJEPSMainPanel epsMainPanel = new ZXGJEPSMainPanel();
 		epsMainPanel.createLogClassificationTable();
@@ -61,7 +62,7 @@ public class webapp implements EntryPoint {
 //		ZXGJKnowledgePanel knowledgePanel = new ZXGJKnowledgePanel();
 //		knowledgePanel.createKnowledgeComponent();
 		
-//		tp.add(secMainPanel,"secMain");
+		tp.add(secMainPanel,"secMain");
 	    tp.add(epsMainPanel, "epsMain");	
 //	    tp.add(plotPanel, "时域分布图");
 //	    tp.add(searchPanel, "Search");	 
