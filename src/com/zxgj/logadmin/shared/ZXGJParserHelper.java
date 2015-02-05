@@ -3,6 +3,7 @@ package com.zxgj.logadmin.shared;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ZXGJParserHelper {
+	public static final int NodeNumber=1;
 	public static final String attributeEnd = "]";
     public static final String attributeBegin = "[";
     public static final String attributeEndAndSpace = "] ";
