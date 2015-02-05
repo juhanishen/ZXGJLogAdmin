@@ -38,7 +38,7 @@
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>webapp.html</welcome-file>
+    <welcome-file>webapp2.html</welcome-file>
   </welcome-file-list>
 
 </web-app>

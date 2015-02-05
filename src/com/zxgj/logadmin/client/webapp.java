@@ -5,6 +5,8 @@ import com.zxgj.logadmin.client.zxgj.ZXGJEPAEventPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJEPSMainPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJKnowledgePanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJSECMainPanel;
+import com.zxgj.logadmin.client.zxgj.ZXGJSearchPanel;
+import com.zxgj.logadmin.client.zxgj.ZXGJTimeSeriesPanel;
 import com.zxgj.logadmin.shared.FieldVerifier;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -53,22 +55,29 @@ public class webapp implements EntryPoint {
 		ZXGJEPSMainPanel epsMainPanel = new ZXGJEPSMainPanel();
 		epsMainPanel.createLogClassificationTable();
 		
-//		ZXGJEPAEventPanel eventPanel = new ZXGJEPAEventPanel();
-//		eventPanel.createEventComponent();
-//		
-//		ZXGJEPACommentPanel commentPanel = new ZXGJEPACommentPanel();
-//		commentPanel.createCommentComponent();
-//		
-//		ZXGJKnowledgePanel knowledgePanel = new ZXGJKnowledgePanel();
-//		knowledgePanel.createKnowledgeComponent();
+		ZXGJSearchPanel searchPanel = new ZXGJSearchPanel();
+		searchPanel.createSearchComponents();
+		
+		ZXGJTimeSeriesPanel plotPanel = new ZXGJTimeSeriesPanel();
+		plotPanel.createPlotComponent();
+		
+		
+		ZXGJEPAEventPanel eventPanel = new ZXGJEPAEventPanel();
+		eventPanel.createEventComponent();
+		
+		ZXGJEPACommentPanel commentPanel = new ZXGJEPACommentPanel();
+		commentPanel.createCommentComponent();
+		
+		ZXGJKnowledgePanel knowledgePanel = new ZXGJKnowledgePanel();
+		knowledgePanel.createKnowledgeComponent();
 		
 		tp.add(secMainPanel,"secMain");
 	    tp.add(epsMainPanel, "epsMain");	
-//	    tp.add(plotPanel, "时域分布图");
-//	    tp.add(searchPanel, "Search");	 
-//	    tp.add(eventPanel,"EPAEvent");
-//	    tp.add(commentPanel,"EPAComments");
-//	    tp.add(knowledgePanel,"专家系统 Expert system");
+	    tp.add(plotPanel, "时域分布图");
+	    tp.add(searchPanel, "Search");	 
+	    tp.add(eventPanel,"EPAEvent");
+	    tp.add(commentPanel,"EPAComments");
+	    tp.add(knowledgePanel,"专家系统 Expert system");
 	    
 	    //set parameters of tp:
 	    tp.setWidth("1200px");

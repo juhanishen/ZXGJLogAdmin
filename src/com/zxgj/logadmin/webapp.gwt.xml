@@ -18,6 +18,8 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
+  <inherits name="org.moxieapps.gwt.highcharts.Highcharts"/>
+  
 
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.zxgj.logadmin.client.webapp'/>

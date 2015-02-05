@@ -19,8 +19,8 @@ import com.zxgj.logadmin.shared.ZXGJParserHelper;
 @SuppressWarnings("serial")
 public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogService {
 
-//	private static String urlString = "http://localhost:8983/solr"; 
-	private static String urlString = "http://104.236.16.189:8983/solr"; 		
+	private static String urlString = "http://localhost:8983/solr"; 
+//	private static String urlString = "http://104.236.16.189:8983/solr"; 		
    	
         
 	@Override
