@@ -19,7 +19,8 @@ import com.zxgj.logadmin.shared.ZXGJParserHelper;
 @SuppressWarnings("serial")
 public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogService {
 
-	private static String urlString = "http://localhost:8983/solr"; 		
+//	private static String urlString = "http://localhost:8983/solr"; 
+	private static String urlString = "http://104.236.16.189:8983/solr"; 		
    	
         
 	@Override
@@ -38,8 +39,12 @@ public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogSer
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+	        if(response == null) {
+	        	throw new RuntimeException("sjj: response is null, there may be security reason, could be?!");
+	        }
 	        
-	        List<FacetField> cat = response.getFacetFields();
+	        List<FacetField> cat = response.getFacetFields();   
+	        
 	        System.out.println("facet fields length is:"+cat.size());
 	        for(FacetField key: cat){
 	     	   System.out.println("key is "+key.getName()+",value is:"+key.getValueCount());

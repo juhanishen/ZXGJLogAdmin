@@ -127,13 +127,13 @@ public class ZXGJSECMainPanel extends VerticalPanel {
 						    // Add it to the root panel.
 						    add(secMsgKeyValueTable);		
 						
-						    ZXGJComputerNodeTopologyPanel nodeMapPanel = new ZXGJComputerNodeTopologyPanel();
-						    nodeMapPanel.createComputerNodeTopology();
-						    add(nodeMapPanel);
+//						    ZXGJComputerNodeTopologyPanel nodeMapPanel = new ZXGJComputerNodeTopologyPanel();
+//						    nodeMapPanel.createComputerNodeTopology();
+//						    add(nodeMapPanel);
 						    
-						    SECNodeTabPanel nodeTabPanel = new SECNodeTabPanel();
-						    nodeTabPanel.createNodes();
-						    add(nodeTabPanel);
+//						    SECNodeTabPanel nodeTabPanel = new SECNodeTabPanel();
+//						    nodeTabPanel.createNodes();
+//						    add(nodeTabPanel);
 						    
 					}
 				});		

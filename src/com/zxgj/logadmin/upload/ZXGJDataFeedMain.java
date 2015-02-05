@@ -6,21 +6,21 @@ import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 
 public class ZXGJDataFeedMain {
+   public static void main(String[] args) throws IOException{
+		
+       if(args[0].equalsIgnoreCase("eap")){
+	       ZXGJEAPFileReader eapFileReader = new ZXGJEAPFileReader(); 
+	       Thread eapThread = new Thread(eapFileReader);
+	       eapThread.start();
+       }else if(args[0].equalsIgnoreCase("sec")){
+   		   ZXGJSECFileReader secFileReader = new ZXGJSECFileReader();
+	       Thread secThread = new Thread(secFileReader);
+	       secThread.start();
 	
-	public static void main(String[] args) throws IOException{
-		
-		String urlString = "http://localhost:8983/solr";		
-		SolrServer solr = new HttpSolrServer(urlString);
-		
-		ZXGJEPADocumentUploader epaUploader = new ZXGJEPADocumentUploader(solr);
+       }else{
+    	   
+    	   System.out.println("argument has to be eap or sec");
+       }
 			
-		ZXGJEAPFileReader eapFileReader = new ZXGJEAPFileReader(epaUploader);
-		eapFileReader.readDocumentsFiles();
-        	
-		ZXGJSECDocumentUploader secUploader = new ZXGJSECDocumentUploader(solr);
-		
-		ZXGJSECFileReader secFileReader = new ZXGJSECFileReader(secUploader);
-		secFileReader.readDocumentsFiles();
-		
 	}
 }

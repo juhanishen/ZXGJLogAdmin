@@ -1,3 +1,4 @@
 # Module webapp
 # RPC service class, partial path of RPC policy file
+com.zxgj.logadmin.client.SECLogService, 4B9A4F072DC1A5497F0DEEBE27C09BC9.gwt.rpc
 com.zxgj.logadmin.client.LogLevelService, 36A564244F95F5C7FF95C158B25B6019.gwt.rpc

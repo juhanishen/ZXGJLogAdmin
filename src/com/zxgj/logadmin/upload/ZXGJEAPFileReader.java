@@ -8,17 +8,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
+import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
+
 import com.zxgj.logadmin.shared.ZXGJParserHelper;
 
 
 
-public class ZXGJEAPFileReader {
+public class ZXGJEAPFileReader implements Runnable {
 	
 	private ZXGJEPADocumentUploader uploader;
+	private SolrServer solr;
 	
-	public ZXGJEAPFileReader(ZXGJEPADocumentUploader uploader){
-		this.uploader = uploader;
+	public ZXGJEAPFileReader(){
+		this.solr = new HttpSolrServer(UploadingHelper.urlString);;
+		this.uploader = new ZXGJEPADocumentUploader(solr);
 	}	
+	
+	@Override
+	public void run(){
+		
+		try {
+			readDocumentsFiles();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 	public void readDocumentsFiles() throws IOException{
 		File file = new File("./lib/EAPTest.log");
