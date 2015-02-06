@@ -56,7 +56,8 @@ class SECHandler implements Runnable {
 			   System.out.println("attributes[0] is"+attributes[0]+",attributes[1]:"+attributes[1]+",attributes[2]:"+attributes[2]);
 			   document.addField(ZXGJParserHelper.lineValueField,attributes[0]);
 			   document.addField(ZXGJParserHelper.lineNumField,Long.parseLong(attributes[1]));
-			   document.addField(ZXGJParserHelper.recordNumField,Long.parseLong(attributes[2]));			 
+			   document.addField(ZXGJParserHelper.recordNumField,Long.parseLong(attributes[2]));
+			   document.addField(ZXGJParserHelper.nodeNameField,attributes[3]);
 			   String[] normalLineAttributes = attributes[0].split(ZXGJParserHelper.space);
 			   System.out.println("normalLineAttributes length is:"+normalLineAttributes.length);
 			   for(String normalAttri:normalLineAttributes){
@@ -88,6 +89,7 @@ class SECHandler implements Runnable {
 				   document.addField(ZXGJParserHelper.lineValueField,attributes[0]);
 				   document.addField(ZXGJParserHelper.lineNumField,Long.parseLong(attributes[1]));
 				   document.addField(ZXGJParserHelper.recordNumField,Long.parseLong(attributes[2]));			 
+				   document.addField(ZXGJParserHelper.nodeNameField,attributes[3]);
 				   String[] normalLineAttributes = attributes[0].split(ZXGJParserHelper.space);
 				   for(String normalAttri:normalLineAttributes){
 					   System.out.println(normalAttri.trim());
@@ -105,7 +107,8 @@ class SECHandler implements Runnable {
 				document.addField(ZXGJParserHelper.lineTypeField,ZXGJParserHelper.SECLineTypeExtra);
 				String[] attributes = line.split(ZXGJParserHelper.ownAttributesSeporator);
                 document.addField(ZXGJParserHelper.lineNumField,Long.parseLong(attributes[1]));
-				document.addField(ZXGJParserHelper.recordNumField,Long.parseLong(attributes[2]));			 
+				document.addField(ZXGJParserHelper.recordNumField,Long.parseLong(attributes[2]));	
+				document.addField(ZXGJParserHelper.nodeNameField,attributes[3]);
 				document.addField(ZXGJParserHelper.lineValueField,attributes[0]);
 				//log error, Ha, there is new type of line
 				System.out.println("this is new type of line:"+line); 

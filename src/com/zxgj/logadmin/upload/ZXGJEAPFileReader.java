@@ -21,10 +21,14 @@ public class ZXGJEAPFileReader implements Runnable {
 	
 	private ZXGJEPADocumentUploader uploader;
 	private SolrServer solr;
+	private String nodeName;
+	private String fileName;
 	
-	public ZXGJEAPFileReader(){
+	public ZXGJEAPFileReader(String nodeName,String fileName){
 		this.solr = new HttpSolrServer(UploadingHelper.urlString);;
 		this.uploader = new ZXGJEPADocumentUploader(solr);
+		this.nodeName = nodeName;
+		this.fileName = fileName;
 	}	
 	
 	@Override
@@ -40,7 +44,7 @@ public class ZXGJEAPFileReader implements Runnable {
 	}
 	
 	public void readDocumentsFiles() throws IOException{
-		File file = new File("./lib/EAPTest.log");
+		File file = new File("./lib/"+fileName);
 	    FileReader fr = new FileReader(file);
 	    BufferedReader br = new BufferedReader(fr);
 	    String line;
@@ -51,15 +55,18 @@ public class ZXGJEAPFileReader implements Runnable {
 	    	  if(line.startsWith(ZXGJParserHelper.lineBeginWithCommnets)){
 	               line = line.concat(ZXGJParserHelper.ownAttributesSeporator+
 	                              +lineNum+ZXGJParserHelper.ownAttributesSeporator
-	                              +recordNum);
+	                              +recordNum+ZXGJParserHelper.ownAttributesSeporator
+	                              +nodeName);
 	    	  }else if(line.startsWith(ZXGJParserHelper.attributeBegin)){
 	    		  line = line.concat(ZXGJParserHelper.ownAttributesSeporator+
                           +lineNum+ZXGJParserHelper.ownAttributesSeporator
-                          +recordNum);
+                          +recordNum+ZXGJParserHelper.ownAttributesSeporator
+                          +nodeName);
 	    	  }else {
 	    		  line = line.concat(ZXGJParserHelper.ownAttributesSeporator+
                           +lineNum+ZXGJParserHelper.ownAttributesSeporator
-                          +recordNum);    		  
+                          +recordNum+ZXGJParserHelper.ownAttributesSeporator
+                          +nodeName);    		  
 	    	  }
 	       lines.add(line);	       
 	       uploader.submitDoc(lines);	         

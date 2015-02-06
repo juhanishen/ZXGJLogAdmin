@@ -18,10 +18,14 @@ public class ZXGJSECFileReader implements Runnable {
 
     private ZXGJSECDocumentUploader uploader;
 	private SolrServer solr;
+	private String nodeName;
+	private String fileName;
 	
-	public ZXGJSECFileReader(){
+	public ZXGJSECFileReader(String nodeName,String fileName){
 		this.solr = new HttpSolrServer(UploadingHelper.urlString);
 		this.uploader = new ZXGJSECDocumentUploader(solr);
+		this.nodeName = nodeName;
+		this.fileName = fileName;
 	}	
 	
 	@Override
@@ -36,7 +40,7 @@ public class ZXGJSECFileReader implements Runnable {
 	}
 	
 	public void readDocumentsFiles() throws IOException{
-		File file = new File("./lib/SECTest.log");
+		File file = new File("./lib/"+fileName);
 	    FileReader fr = new FileReader(file);
 	    BufferedReader br = new BufferedReader(fr);
 	    String line;
@@ -52,11 +56,13 @@ public class ZXGJSECFileReader implements Runnable {
 	    				 || strs[1].equalsIgnoreCase(ZXGJParserHelper.RECEIVE)){
 		               line = line.trim().concat(ZXGJParserHelper.ownAttributesSeporator+
 		                              +lineNum+ZXGJParserHelper.ownAttributesSeporator
-		                              +recordNum);
+		                              +recordNum+ZXGJParserHelper.ownAttributesSeporator
+		                              +nodeName);
 		    	  }else {
 		    		  line = line.trim().concat(ZXGJParserHelper.ownAttributesSeporator+
 	                          +lineNum+ZXGJParserHelper.ownAttributesSeporator
-	                          +recordNum);    		  
+	                          +recordNum+ZXGJParserHelper.ownAttributesSeporator
+                              +nodeName);    		  
 		    	  }
 		       
 	    	}

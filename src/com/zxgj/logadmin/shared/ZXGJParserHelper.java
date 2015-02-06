@@ -17,6 +17,7 @@ public class ZXGJParserHelper {
 	public static final String secLineMessageKeyCodeField = "secMsgCode_s";
 	public static final String secLineMessageKeyCodeValueField = "secMsgCodeValue_s";	
 	public static final String secLineLeftLineField = "secLineExtra_s";
+	public static final String nodeNameField = "nodeName_s";
 	
 	public static final String fileTypeField = "fileType";
 	public static final String lineNumField = "lineNum_l";
@@ -55,6 +56,15 @@ public class ZXGJParserHelper {
 	public static final String facetSECDateStartField="facet.date.start";
 	public static final String facetSECDateEndField = "facet.date.end";
 	public static final String facetSECDateGapField = "facet.date.gap";
+	
+	public static final String queryGetAllSECMsgKeyValue="getAllSECFileMsgKeyValue";	
+	public static final String queryGetTransactionTimeoutByNode = "getTransactionTimeoutByNode";
+	public static final String queryGetTransactionTimeoutByTimeSeriesByNode1 = "getTransactionTimeoutByTimeSeriesByNode1";
+	public static final String queryGetTransactionTimeoutByTimeSeriesByNode2 = "getTransactionTimeoutByTimeSeriesByNode2";
+
+	public static final String TransactionTimeoutMsgKeyValue = "TransactionTimerTimeout";
+	public static final String NodeName1 = "node1";
+	public static final String NodeName2 = "node2";
 	
 	public static boolean doesLineStartWithDigit(String line){
 		return line.startsWith("0") || line.startsWith("1") ||

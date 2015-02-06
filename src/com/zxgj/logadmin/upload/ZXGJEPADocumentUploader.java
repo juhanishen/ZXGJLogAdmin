@@ -49,13 +49,15 @@ class EPAHandler implements Runnable {
 			   String[] attributes = line.split(ZXGJParserHelper.ownAttributesSeporator);
 			   document.addField(ZXGJParserHelper.lineValueField,attributes[0]);
 			   document.addField(ZXGJParserHelper.lineNumField,Long.parseLong(attributes[1]));
-			   document.addField(ZXGJParserHelper.recordNumField,Long.parseLong(attributes[2]));			   
+			   document.addField(ZXGJParserHelper.recordNumField,Long.parseLong(attributes[2]));	
+			   document.addField(ZXGJParserHelper.nodeNameField,attributes[3]);
 			}else if(line.startsWith(ZXGJParserHelper.attributeBegin)){
 			   document.addField(ZXGJParserHelper.lineTypeField,ZXGJParserHelper.lineTypeEAPNormal);
 			   String[] attributes = line.split(ZXGJParserHelper.ownAttributesSeporator);
 			   document.addField(ZXGJParserHelper.lineValueField,attributes[0]);
 			   document.addField(ZXGJParserHelper.lineNumField,Long.parseLong(attributes[1]));
-			   document.addField(ZXGJParserHelper.recordNumField,Long.parseLong(attributes[2]));			 
+			   document.addField(ZXGJParserHelper.recordNumField,Long.parseLong(attributes[2]));			   
+			   document.addField(ZXGJParserHelper.nodeNameField,attributes[3]);
 			   String[] normalLineAttributes = attributes[0].split(ZXGJParserHelper.attributeEnd);
 			   for(String normalAttri:normalLineAttributes){
 				   System.out.println(normalAttri.trim());
