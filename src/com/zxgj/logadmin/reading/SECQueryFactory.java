@@ -35,7 +35,7 @@ public class SECQueryFactory {
         	 query.setFilterQueries(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+ZXGJParserHelper.TransactionTimeoutMsgKeyValue,
         			 ZXGJParserHelper.nodeNameField+":"+ZXGJParserHelper.NodeName1);
 
-         	 query.setFacet(true);
+         	  query.setFacet(true);
              query.addFacetField(ZXGJParserHelper.secLineMessageKeyCodeValueField);      	 
              query.addFacetQuery(ZXGJParserHelper.secLineTimeStampField+":[2015-01-23T11:35:34.653Z TO 2015-01-23T11:35:36.653Z}");
              query.addFacetQuery(ZXGJParserHelper.secLineTimeStampField+":[2015-01-23T11:35:36.653Z TO 2015-01-23T11:35:50.653Z}");

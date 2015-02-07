@@ -50,7 +50,7 @@ public class webapp implements EntryPoint {
 	    TabPanel tp = new TabPanel();
 		
 		ZXGJSECMainPanel secMainPanel = new ZXGJSECMainPanel();
-		secMainPanel.createMsgKeyValueTable();
+		secMainPanel.createComponents();
 		
 		ZXGJEPSMainPanel epsMainPanel = new ZXGJEPSMainPanel();
 		epsMainPanel.createLogClassificationTable();
