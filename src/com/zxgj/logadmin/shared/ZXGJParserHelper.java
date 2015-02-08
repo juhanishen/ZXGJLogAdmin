@@ -3,7 +3,8 @@ package com.zxgj.logadmin.shared;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ZXGJParserHelper {
-	public static final int NodeNumber=1;
+	public static final int NodeNumber=2;
+	public static final long maxDemoLineNumber = 506;
 	public static final String attributeEnd = "]";
     public static final String attributeBegin = "[";
     public static final String attributeEndAndSpace = "] ";
@@ -58,13 +59,18 @@ public class ZXGJParserHelper {
 	public static final String facetSECDateGapField = "facet.date.gap";
 	
 	public static final String queryGetAllSECMsgKeyValue="getAllSECFileMsgKeyValue";	
-	public static final String queryGetTransactionTimeoutByNode = "getTransactionTimeoutByNode";
+	public static final String queryGetTransactionTimeoutPerNode = "getTransactionTimeoutPerNode";
 	public static final String queryGetTransactionTimeoutByTimeSeriesByNode1 = "getTransactionTimeoutByTimeSeriesByNode1";
 	public static final String queryGetTransactionTimeoutByTimeSeriesByNode2 = "getTransactionTimeoutByTimeSeriesByNode2";
+    public static final String queryGetTransactionTimeoutLinesOffsetInNode = "getTransactionTimeoutLinesOffsetInNode";
 
+	
 	public static final String TransactionTimeoutMsgKeyValue = "TransactionTimerTimeout";
 	public static final String NodeName1 = "node1";
 	public static final String NodeName2 = "node2";
+	
+	public static final String paramOFFSET="offset";
+	public static final String paramLINENUM = "lineNum";
 	
 	public static boolean doesLineStartWithDigit(String line){
 		return line.startsWith("0") || line.startsWith("1") ||

@@ -1,5 +1,7 @@
 package com.zxgj.logadmin.reading;
 
+import java.util.Map;
+
 import org.apache.solr.client.solrj.SolrQuery;
 
 import com.zxgj.logadmin.shared.ZXGJParserHelper;
@@ -20,13 +22,13 @@ public class SECQueryFactory {
 ////        query.add(ZXGJParserHelper.facetSECDateGapField,"%2B1SECOND");   
 //        query.add(ZXGJParserHelper.facetSECDateGapField,"+1SECOND"); 
     
-    public SolrQuery getQueryByName(String name){
+    public SolrQuery getQueryByName(String name,Map<String,String> params){
     	 SolrQuery query = new SolrQuery();
          if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetAllSECMsgKeyValue)){
         	 query.setQuery("*:*");
              query.setFacet(true);
              query.addFacetField(ZXGJParserHelper.secLineMessageKeyCodeValueField);        	 
-         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetTransactionTimeoutByNode)){
+         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetTransactionTimeoutPerNode)){
         	 query.setQuery(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+ZXGJParserHelper.TransactionTimeoutMsgKeyValue);
         	 query.setFacet(true);
              query.addFacetField(ZXGJParserHelper.nodeNameField);        	 
@@ -40,6 +42,14 @@ public class SECQueryFactory {
              query.addFacetQuery(ZXGJParserHelper.secLineTimeStampField+":[2015-01-23T11:35:34.653Z TO 2015-01-23T11:35:36.653Z}");
              query.addFacetQuery(ZXGJParserHelper.secLineTimeStampField+":[2015-01-23T11:35:36.653Z TO 2015-01-23T11:35:50.653Z}");
              query.addFacetQuery(ZXGJParserHelper.secLineTimeStampField+":[2015-01-23T11:35:50.653Z TO 2015-01-23T11:36:40.653Z]");
+         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetTransactionTimeoutLinesOffsetInNode)){
+        	 String nodeName = params.get(ZXGJParserHelper.nodeNameField);
+        	 int offset = Integer.parseInt(params.get(ZXGJParserHelper.paramOFFSET));
+             long lineNum = Long.parseLong(params.get(ZXGJParserHelper.paramLINENUM)); 
+     	 
+        	 query.setQuery("*:*");
+        	 query.setFilterQueries(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+ZXGJParserHelper.TransactionTimeoutMsgKeyValue,
+          			 ZXGJParserHelper.nodeNameField+":"+nodeName, ZXGJParserHelper.lineNumField+":["+Math.min(0,lineNum-offset)+ " TO " + Math.max(506, lineNum+offset)+"]");  
          }
          return query;    	
     }

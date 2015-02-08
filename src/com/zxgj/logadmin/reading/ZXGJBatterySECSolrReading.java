@@ -22,9 +22,9 @@ public class ZXGJBatterySECSolrReading {
 	public static void main(String[] args) throws SolrServerException {
         String urlString = "http://localhost:8983/solr"; 		
         SolrServer solr = new HttpSolrServer(urlString);	
-//        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryGetAllSECMsgKeyValue);
-        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryGetTransactionTimeoutByTimeSeriesByNode1);
-//        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryGetTransactionTimeoutByNode);
+//        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryGetAllSECMsgKeyValue,null);
+//        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryGetTransactionTimeoutByTimeSeriesByNode1,null);
+        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryGetTransactionTimeoutPerNode,null);
 
         
         QueryResponse response = solr.query(query);        
