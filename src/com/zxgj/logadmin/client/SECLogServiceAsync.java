@@ -8,4 +8,5 @@ public interface SECLogServiceAsync {
 	void getMegKeyValues(AsyncCallback<SECMsgKeyValue[]> callback) throws IllegalArgumentException;
     void getTimeoutLinesOffsetByNodeName(String nodeName,long lineNum, int offset,AsyncCallback<SECNodeTimeout> callback) throws IllegalArgumentException;
 	void getTimeoutPerNode(AsyncCallback<SECNodeTimeout[]> callback) throws IllegalArgumentException;
+	void getTimeoutLinesByNode(String nodeName,AsyncCallback<SECNodeTimeout> callback) throws IllegalArgumentException;
 }

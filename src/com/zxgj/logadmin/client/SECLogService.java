@@ -12,4 +12,5 @@ public interface SECLogService extends RemoteService {
 	SECMsgKeyValue[] getMegKeyValues() throws IllegalArgumentException;
 	SECNodeTimeout getTimeoutLinesOffsetByNodeName(String nodeName,long lineNum, int offset) throws IllegalArgumentException;
     SECNodeTimeout[] getTimeoutPerNode() throws IllegalArgumentException;
+    SECNodeTimeout getTimeoutLinesByNode(String nodeName) throws IllegalArgumentException;
 }

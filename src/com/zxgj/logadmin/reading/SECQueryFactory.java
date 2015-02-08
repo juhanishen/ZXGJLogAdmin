@@ -49,7 +49,20 @@ public class SECQueryFactory {
      	 
         	 query.setQuery("*:*");
         	 query.setFilterQueries(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+ZXGJParserHelper.TransactionTimeoutMsgKeyValue,
-          			 ZXGJParserHelper.nodeNameField+":"+nodeName, ZXGJParserHelper.lineNumField+":["+Math.min(0,lineNum-offset)+ " TO " + Math.max(506, lineNum+offset)+"]");  
+          			 ZXGJParserHelper.nodeNameField+":"+nodeName, ZXGJParserHelper.lineNumField+":[ "+Math.max(0,lineNum-offset)+ " TO " + (lineNum+offset)+" ]");  
+         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetTransactionTimeoutLinesOffsetInNode)){
+        	 String nodeName = params.get(ZXGJParserHelper.nodeNameField);
+        	 int offset = Integer.parseInt(params.get(ZXGJParserHelper.paramOFFSET));
+             long lineNum = Long.parseLong(params.get(ZXGJParserHelper.paramLINENUM)); 
+     	 
+        	 query.setQuery("*:*");
+        	 query.setFilterQueries(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+ZXGJParserHelper.TransactionTimeoutMsgKeyValue,
+          			 ZXGJParserHelper.nodeNameField+":"+nodeName, ZXGJParserHelper.lineNumField+":[ "+Math.max(0,lineNum-offset)+ " TO " + (lineNum+offset)+" ]");  
+         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetTransactionTimeoutLinesByNode)){
+        	 String nodeName = params.get(ZXGJParserHelper.nodeNameField);
+        	 query.setQuery("*:*");
+        	 query.setFilterQueries(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+ZXGJParserHelper.TransactionTimeoutMsgKeyValue,
+          			 ZXGJParserHelper.nodeNameField+":"+nodeName);  
          }
          return query;    	
     }

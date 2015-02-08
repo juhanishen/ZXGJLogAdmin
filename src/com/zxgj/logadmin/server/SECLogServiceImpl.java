@@ -17,6 +17,7 @@ import org.apache.solr.common.SolrDocumentList;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.zxgj.logadmin.client.SECLogService;
 import com.zxgj.logadmin.reading.SECQueryFactory;
+import com.zxgj.logadmin.shared.LineNumberAndLineValue;
 import com.zxgj.logadmin.shared.SECMsgKeyValue;
 import com.zxgj.logadmin.shared.SECNodeTimeout;
 import com.zxgj.logadmin.shared.ZXGJParserHelper;
@@ -123,11 +124,9 @@ public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogSer
 		params.put(ZXGJParserHelper.nodeNameField, nodeName);
 	    SolrServer solr = new HttpSolrServer(urlString);
 	    
-        SolrQuery query = null;
-        if(nodeName.equalsIgnoreCase(ZXGJParserHelper.NodeName1)){
-        	query =	SECQueryFactory.getInstance().getQueryByName(
+        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(
 	    		ZXGJParserHelper.queryGetTransactionTimeoutLinesOffsetInNode,params);
-        }
+        
         
         QueryResponse response = null;
         try {
@@ -144,18 +143,73 @@ public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogSer
         System.out.println("number of result is:"+results.getNumFound());
 
 //          for (int i = 0; i < results.size(); ++i) {
-        int range = Math.min(10, results.size());
+        int range = Math.min(20, results.size());
         for (int i = 0; i <range; ++i) { 
-            SolrDocument doc = results.get(i);	
+            SolrDocument doc = results.get(i);
+            LineNumberAndLineValue lineParam = new LineNumberAndLineValue();
+            timeoutLineWithOffsets.getTransactionTimoutLines().add(lineParam);
             for(String fieldName: doc.getFieldNames()){
           	    System.out.println("fieldName is"+fieldName+",Value is "+doc.getFieldValue(fieldName));
-          	    if(fieldName.equalsIgnoreCase(ZXGJParserHelper.lineValueField)){
-          	        timeoutLineWithOffsets.getTransactionTimoutLines().add((String) doc.getFieldValue(fieldName));
+          	    if(fieldName.equalsIgnoreCase(ZXGJParserHelper.lineValueField)){          	    	
+          	        timeoutLineWithOffsets.getTransactionTimoutLines().get(i).setLineValue((String) doc.getFieldValue(fieldName));
+          	    }
+          	    if(fieldName.equalsIgnoreCase(ZXGJParserHelper.lineNumField)){
+          	        timeoutLineWithOffsets.getTransactionTimoutLines().get(i).setLineNum((Long) doc.getFieldValue(fieldName));
           	    }
             }
         }
         return timeoutLineWithOffsets;
 
+	}
+
+
+
+
+	@Override
+	public SECNodeTimeout getTimeoutLinesByNode(String nodeName)
+			throws IllegalArgumentException {
+		SECNodeTimeout timeoutLines = new SECNodeTimeout();
+		timeoutLines.setNodeName(nodeName);
+		Map<String,String> params = new HashMap<String,String>();
+		params.put(ZXGJParserHelper.nodeNameField, nodeName);
+	    SolrServer solr = new HttpSolrServer(urlString);
+	    
+        SolrQuery query = null;
+        query =	SECQueryFactory.getInstance().getQueryByName(
+	    		ZXGJParserHelper.queryGetTransactionTimeoutLinesByNode,params);
+ 
+        QueryResponse response = null;
+        try {
+			response = solr.query(query);
+		} catch (SolrServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        if(response == null) {
+        	throw new RuntimeException("sjj: response is null, there may be security reason, could be?!");
+        }
+        
+        SolrDocumentList results = response.getResults();
+        System.out.println("number of result is:"+results.getNumFound());
+
+//          for (int i = 0; i < results.size(); ++i) {
+        int range = Math.min(20, results.size());
+        for (int i = 0; i <range; ++i) { 
+            SolrDocument doc = results.get(i);
+            LineNumberAndLineValue lineParam = new LineNumberAndLineValue();
+            timeoutLines.getTransactionTimoutLines().add(lineParam);
+            for(String fieldName: doc.getFieldNames()){
+          	    System.out.println("fieldName is"+fieldName+",Value is "+doc.getFieldValue(fieldName));
+          	    if(fieldName.equalsIgnoreCase(ZXGJParserHelper.lineValueField)){          	    	
+          	    	timeoutLines.getTransactionTimoutLines().get(i).setLineValue((String) doc.getFieldValue(fieldName));
+          	    }
+          	    if(fieldName.equalsIgnoreCase(ZXGJParserHelper.lineNumField)){
+          	    	timeoutLines.getTransactionTimoutLines().get(i).setLineNum((Long) doc.getFieldValue(fieldName));
+          	    }
+            }
+        }
+        return timeoutLines;
+        
 	}
 
 }

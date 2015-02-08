@@ -43,7 +43,7 @@ class EPAHandler implements Runnable {
 	public void run() {
 		for(String line:lines){
 			SolrInputDocument document = new SolrInputDocument();
-			document.addField( ZXGJParserHelper.IDField, String.valueOf(ZXGJParserHelper.idGenerator.getAndIncrement())+Calendar.getInstance().getTimeInMillis());
+			document.addField( ZXGJParserHelper.IDField, String.valueOf(UploadingHelper.idGenerator.getAndIncrement())+Calendar.getInstance().getTimeInMillis());
 			if(line.startsWith(ZXGJParserHelper.lineBeginWithCommnets)){
 			   document.addField(ZXGJParserHelper.lineTypeField,ZXGJParserHelper.lineTypeComments);
 			   String[] attributes = line.split(ZXGJParserHelper.ownAttributesSeporator);

@@ -10,7 +10,7 @@ public class SECNodeTimeout implements Serializable {
 	
 	String nodeName;
 	Long transactionTimoutAmount;
-    List<String> transactionTimoutLines = new ArrayList<String>();
+    List<LineNumberAndLineValue> transactionTimoutLines = new ArrayList<LineNumberAndLineValue>();
 	
 	public SECNodeTimeout() {
 	    	
@@ -32,11 +32,11 @@ public class SECNodeTimeout implements Serializable {
 		this.transactionTimoutAmount = transactionTimoutAmount;
 	}
 
-	public List<String> getTransactionTimoutLines() {
+	public List<LineNumberAndLineValue> getTransactionTimoutLines() {
 		return transactionTimoutLines;
 	}
 
-	public void setTransactionTimoutLines(List<String> transactionTimoutLines) {
+	public void setTransactionTimoutLines(List<LineNumberAndLineValue> transactionTimoutLines) {
 		this.transactionTimoutLines = transactionTimoutLines;
 	}
 }

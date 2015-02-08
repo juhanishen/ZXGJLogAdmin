@@ -23,9 +23,14 @@ public class ZXGJSECMainPanel extends VerticalPanel {
 				       new ZXGJSECMsgKeyValuePlotPanel();
 		plotPanel.createPlotComponents();
 		
+		ZXGJSECNodeTimeoutLinesPanel node1TimeoutLinesPanel = new 
+				ZXGJSECNodeTimeoutLinesPanel();
+		node1TimeoutLinesPanel.createTimeoutLinesTableComponents();
+		
+		
 		add(hPanel);
 		add(plotPanel);
-		                    
+		add(node1TimeoutLinesPanel);                    
 	}
 
 }

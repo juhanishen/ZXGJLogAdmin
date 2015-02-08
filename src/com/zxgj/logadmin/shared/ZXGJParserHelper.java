@@ -1,10 +1,7 @@
 package com.zxgj.logadmin.shared;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 public class ZXGJParserHelper {
 	public static final int NodeNumber=2;
-	public static final long maxDemoLineNumber = 506;
 	public static final String attributeEnd = "]";
     public static final String attributeBegin = "[";
     public static final String attributeEndAndSpace = "] ";
@@ -47,7 +44,7 @@ public class ZXGJParserHelper {
 	
 	public static final String logLevel = "logLevel";
 	
-	public static AtomicLong idGenerator = new AtomicLong(0);
+//    public static AtomicLong idGenerator = new AtomicLong(0);
 	
 	public static final String SEND = "SEND";
 	public static final String RECEIVE = "RECV";
@@ -63,7 +60,7 @@ public class ZXGJParserHelper {
 	public static final String queryGetTransactionTimeoutByTimeSeriesByNode1 = "getTransactionTimeoutByTimeSeriesByNode1";
 	public static final String queryGetTransactionTimeoutByTimeSeriesByNode2 = "getTransactionTimeoutByTimeSeriesByNode2";
     public static final String queryGetTransactionTimeoutLinesOffsetInNode = "getTransactionTimeoutLinesOffsetInNode";
-
+    public static final String queryGetTransactionTimeoutLinesByNode = "getTransactionTimeoutLinesByNode";
 	
 	public static final String TransactionTimeoutMsgKeyValue = "TransactionTimerTimeout";
 	public static final String NodeName1 = "node1";
