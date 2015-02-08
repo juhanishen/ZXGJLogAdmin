@@ -4,14 +4,21 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.ListDataProvider;
 import com.zxgj.logadmin.client.SECLogService;
 import com.zxgj.logadmin.client.SECLogServiceAsync;
+import com.zxgj.logadmin.shared.EPARecord;
 import com.zxgj.logadmin.shared.LineNumberAndLineValue;
 import com.zxgj.logadmin.shared.SECNodeTimeout;
 import com.zxgj.logadmin.shared.ZXGJParserHelper;
@@ -64,6 +71,22 @@ public class ZXGJSECNodeTimeoutLinesPanel extends VerticalPanel {
 	    
 	    final List<LineNumberAndLineValue> pairList = secLineNumberAndValueDataProvider.getList();
 
+	    final Button showOffsetLines = new Button("Show up and down lines");
+	    
+	    final ListBox offsetsLB = new ListBox();
+	    offsetsLB.addItem("5");
+	    offsetsLB.addItem("10");
+	    offsetsLB.addItem("15");	
+	    offsetsLB.setVisibleItemCount(1);
+	    
+	    final HorizontalPanel hPanel = new HorizontalPanel();
+	    hPanel.add(showOffsetLines);
+	    hPanel.add(offsetsLB);
+	    
+	    final TextArea ta = new TextArea();
+	    ta.setWidth("500px");
+	    ta.setHeight("400px");
+	    
 	    secLogService.getTimeoutLinesByNode(
 	    		ZXGJParserHelper.NodeName1,new AsyncCallback<SECNodeTimeout>() {
 					public void onFailure(Throwable caught) {
@@ -108,10 +131,42 @@ public class ZXGJSECNodeTimeoutLinesPanel extends VerticalPanel {
 
 						    // Add it to the root panel.
 						add(secTimeoutLinesTable);		
-						
+						add(hPanel);
 						    
 					}
-				});		
+				});	
+	    
+	    secTimeoutLinesTable.addCellPreviewHandler(new CellPreviewEvent.Handler<LineNumberAndLineValue>() {
+
+	        @Override
+	        public void onCellPreview(final CellPreviewEvent<LineNumberAndLineValue> event) {
+
+	            if (BrowserEvents.CLICK.equals(event.getNativeEvent().getType())) {
+
+	                final LineNumberAndLineValue value = event.getValue();
+	                secLogService.getTimeoutLinesOffsetByNodeName(ZXGJParserHelper.NodeName1,value.getLineNum(),Integer.parseInt(offsetsLB.getSelectedValue()),
+	    					new AsyncCallback<SECNodeTimeout>() {
+	    						public void onFailure(Throwable caught) {
+	    							// Show the RPC error message to the user
+	    							ta.setText("Remote Procedure Call - Failure");
+	    						
+	    						}
+
+	    						public void onSuccess(SECNodeTimeout nodeTimeout) {	    							
+	    							StringBuffer sb = new StringBuffer("Lines are :\n");
+                                    for(LineNumberAndLineValue lineNumberAndValue : nodeTimeout.getTransactionTimoutLines()){
+                                        sb.append(lineNumberAndValue.getLineValue()+"\n");	
+                                    }
+                                    ta.setText(sb.toString());
+	    							add(ta);	    							
+	    						}
+	    					});		
+	                final Boolean state = !event.getDisplay().getSelectionModel().isSelected(value);
+	                event.getDisplay().getSelectionModel().setSelected(value, state);
+	                event.setCanceled(true);
+	            }
+	        }
+	     });    
 	}
 	
 	

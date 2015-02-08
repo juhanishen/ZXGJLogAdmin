@@ -45,19 +45,9 @@ public class SECQueryFactory {
          }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetTransactionTimeoutLinesOffsetInNode)){
         	 String nodeName = params.get(ZXGJParserHelper.nodeNameField);
         	 int offset = Integer.parseInt(params.get(ZXGJParserHelper.paramOFFSET));
-             long lineNum = Long.parseLong(params.get(ZXGJParserHelper.paramLINENUM)); 
-     	 
+             long lineNum = Long.parseLong(params.get(ZXGJParserHelper.paramLINENUM));      	 
         	 query.setQuery("*:*");
-        	 query.setFilterQueries(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+ZXGJParserHelper.TransactionTimeoutMsgKeyValue,
-          			 ZXGJParserHelper.nodeNameField+":"+nodeName, ZXGJParserHelper.lineNumField+":[ "+Math.max(0,lineNum-offset)+ " TO " + (lineNum+offset)+" ]");  
-         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetTransactionTimeoutLinesOffsetInNode)){
-        	 String nodeName = params.get(ZXGJParserHelper.nodeNameField);
-        	 int offset = Integer.parseInt(params.get(ZXGJParserHelper.paramOFFSET));
-             long lineNum = Long.parseLong(params.get(ZXGJParserHelper.paramLINENUM)); 
-     	 
-        	 query.setQuery("*:*");
-        	 query.setFilterQueries(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+ZXGJParserHelper.TransactionTimeoutMsgKeyValue,
-          			 ZXGJParserHelper.nodeNameField+":"+nodeName, ZXGJParserHelper.lineNumField+":[ "+Math.max(0,lineNum-offset)+ " TO " + (lineNum+offset)+" ]");  
+        	 query.setFilterQueries(ZXGJParserHelper.nodeNameField+":"+nodeName, ZXGJParserHelper.lineNumField+":[ "+Math.max(0,lineNum-offset)+ " TO " + (lineNum+offset)+" ]");  
          }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetTransactionTimeoutLinesByNode)){
         	 String nodeName = params.get(ZXGJParserHelper.nodeNameField);
         	 query.setQuery("*:*");
