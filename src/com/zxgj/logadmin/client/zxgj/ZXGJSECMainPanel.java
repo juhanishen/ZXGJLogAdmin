@@ -8,16 +8,16 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class ZXGJSECMainPanel extends VerticalPanel {
 	
 	public void createComponents(){
-		HorizontalPanel hPanel = new HorizontalPanel();
+		
 		
 		ZXGJSECMsgKeyValueTotalPanel MsgKeyValueTotalPanel = 
 				       new ZXGJSECMsgKeyValueTotalPanel();
 		MsgKeyValueTotalPanel.createMsgKeyValueTable();
-		hPanel.add(MsgKeyValueTotalPanel);
+
 		
 		ZXGJSECMsgKeyValueBreakDownPanel breakdownPanel = new ZXGJSECMsgKeyValueBreakDownPanel();
 		breakdownPanel.createBreakDownTableComponents();
-		hPanel.add(breakdownPanel);
+
 		
 		ZXGJSECMsgKeyValuePlotPanel plotPanel = 
 				       new ZXGJSECMsgKeyValuePlotPanel();
@@ -28,7 +28,8 @@ public class ZXGJSECMainPanel extends VerticalPanel {
 		node1TimeoutLinesPanel.createTimeoutLinesTableComponents();
 		
 		
-		add(hPanel);
+		add(MsgKeyValueTotalPanel);
+		add(breakdownPanel);
 		add(plotPanel);
 		add(node1TimeoutLinesPanel);                    
 	}

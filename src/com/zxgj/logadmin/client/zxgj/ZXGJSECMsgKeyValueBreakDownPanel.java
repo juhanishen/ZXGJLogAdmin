@@ -26,6 +26,8 @@ public class ZXGJSECMsgKeyValueBreakDownPanel extends VerticalPanel {
 		// Create a CellTable.
 	    final CellTable<SECNodeTimeout> secNodeTimeoutPerNodeTable = new CellTable<SECNodeTimeout>();
 
+	    secNodeTimeoutPerNodeTable.setTitle("Transaction timeout per node"); 
+
 	    // Create name column.
 	    final TextColumn<SECNodeTimeout> secNodeNameColumn = new TextColumn<SECNodeTimeout>() {
 	      @Override

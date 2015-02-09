@@ -24,7 +24,8 @@ public class ZXGJSECMsgKeyValueTotalPanel extends VerticalPanel {
 	public void createMsgKeyValueTable() {
 		// Create a CellTable.
 	    final CellTable<SECMsgKeyValue> secMsgKeyValueTable = new CellTable<SECMsgKeyValue>();
-
+	    secMsgKeyValueTable.setTitle("Transaction timeout across all nodes"); 
+	    
 	    // Create name column.
 	    final TextColumn<SECMsgKeyValue> secMegKeyValueColumn = new TextColumn<SECMsgKeyValue>() {
 	      @Override
