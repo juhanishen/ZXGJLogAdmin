@@ -8,10 +8,17 @@ import org.moxieapps.gwt.highcharts.client.Color;
 import org.moxieapps.gwt.highcharts.client.Legend;
 import org.moxieapps.gwt.highcharts.client.Series;
 import org.moxieapps.gwt.highcharts.client.ToolTip;
+import org.moxieapps.gwt.highcharts.client.events.ChartClickEvent;
+import org.moxieapps.gwt.highcharts.client.events.ChartClickEventHandler;
+import org.moxieapps.gwt.highcharts.client.events.PointClickEvent;
+import org.moxieapps.gwt.highcharts.client.events.PointClickEventHandler;
 import org.moxieapps.gwt.highcharts.client.plotOptions.AreaPlotOptions;
 import org.moxieapps.gwt.highcharts.client.plotOptions.Marker;
+import org.moxieapps.gwt.highcharts.client.plotOptions.SeriesPlotOptions;
 
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ZXGJTimeSeriesPanel extends VerticalPanel {
@@ -23,9 +30,6 @@ public class ZXGJTimeSeriesPanel extends VerticalPanel {
 		this.add(createChart());
 	}
 	
-	
-	
-
 	public Chart createChart(){
         final Chart chart = new Chart()  
         .setZoomType(Chart.ZoomType.X)  
@@ -59,7 +63,14 @@ public class ZXGJTimeSeriesPanel extends VerticalPanel {
             .setShadow(false)  
             .setHoverStateLineWidth(1)  
         );  
-
+        
+    chart.setClickEventHandler(new ChartClickEventHandler() {
+ 		   public boolean onClick(ChartClickEvent clickEvent) {
+ 		      Window.alert("X is:" + clickEvent.getXAxisValue()+", Y is:"+clickEvent.getYAxisValue());
+ 		      return true;
+ 		   }
+ 		});
+    
     chart.getXAxis()  
         .setType(Axis.Type.DATE_TIME)  
         .setMaxZoom(14 * 24 * 3600000) // fourteen days  
@@ -77,7 +88,8 @@ public class ZXGJTimeSeriesPanel extends VerticalPanel {
         .setPlotOptions(new AreaPlotOptions()  
             .setPointInterval(24 * 3600 * 1000)  
             .setPointStart(getTime("2006-01-01"))  
-        )  
+            
+        )
         .setPoints(new Number[]{  
             0.8446, 0.8445, 0.8444, 0.8451, 0.8418, 0.8264, 0.8258, 0.8232, 0.8233, 0.8258,  
             0.8283, 0.8278, 0.8256, 0.8292, 0.8239, 0.8239, 0.8245, 0.8265, 0.8261, 0.8269,  
@@ -192,6 +204,14 @@ public class ZXGJTimeSeriesPanel extends VerticalPanel {
         })  
     );  
 
+    chart.setSeriesPlotOptions(new SeriesPlotOptions()
+               .setPointClickEventHandler(new PointClickEventHandler() {
+        public boolean onClick(PointClickEvent clickEvent) {
+             Window.alert("User clicked on point: " + clickEvent.getXAsDouble() + ", " + clickEvent.getYAsDouble());
+             return true;
+        }
+    }));
+    
     return chart; 
 	}
 	

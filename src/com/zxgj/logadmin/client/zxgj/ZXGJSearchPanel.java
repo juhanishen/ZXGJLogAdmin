@@ -3,14 +3,18 @@ package com.zxgj.logadmin.client.zxgj;
 import java.util.Date;
 
 
+
 import org.moxieapps.gwt.highcharts.client.Chart;
 import org.moxieapps.gwt.highcharts.client.Series;
+import org.moxieapps.gwt.highcharts.client.events.ChartClickEvent;
+import org.moxieapps.gwt.highcharts.client.events.ChartClickEventHandler;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -46,6 +50,12 @@ public class ZXGJSearchPanel extends VerticalPanel {
 			searchChart.addSeries(highLimit);
 			searchChart.addSeries(lowLimit);
 			
+			searchChart.setClickEventHandler(new ChartClickEventHandler() {
+		 		   public boolean onClick(ChartClickEvent clickEvent) {
+		 		      Window.alert("X is:" + clickEvent.getXAxisValue()+", Y is:"+clickEvent.getYAxisValue());
+		 		      return true;
+		 		   }
+		 		});
 //			searchChart.removeSeries(searchSeries);
 			
 //			searchChart.getSeries("deviceId").addPoint(

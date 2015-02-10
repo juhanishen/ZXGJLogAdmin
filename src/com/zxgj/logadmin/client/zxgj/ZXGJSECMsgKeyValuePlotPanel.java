@@ -2,9 +2,12 @@ package com.zxgj.logadmin.client.zxgj;
 
 import org.moxieapps.gwt.highcharts.client.Chart;
 import org.moxieapps.gwt.highcharts.client.Series;
+import org.moxieapps.gwt.highcharts.client.events.ChartClickEvent;
+import org.moxieapps.gwt.highcharts.client.events.ChartClickEventHandler;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -36,9 +39,18 @@ public class ZXGJSECMsgKeyValuePlotPanel extends VerticalPanel {
 					.setPoints(new Number[] {500,500,500,500,500,500,500});
 			final Series node2Series = nodeChart.createSeries().setName("Node2 Timeout")
 					.setPoints(new Number[] {300,300,300,300,300,300,300});
+			nodeChart.setClickEventHandler(new ChartClickEventHandler() {
+		 		   public boolean onClick(ChartClickEvent clickEvent) {
+		 		      Window.alert("X is:" + clickEvent.getXAxisValue()+", Y is:"+clickEvent.getYAxisValue());
+		 		      return true;
+		 		   }
+		 		});
+			
 			add(nodeCheckBoxPanel);
 			add(nodeChart);
 		    
+			
+			
 		    node1CheckBox.addClickHandler(new ClickHandler() {
 
 		    	@Override
