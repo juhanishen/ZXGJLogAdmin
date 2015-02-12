@@ -13,15 +13,7 @@ public class SECQueryFactory {
     }
     
     private SECQueryFactory(){}
-    
-    
-//        query.addFilterQuery(ZXGJParserHelper.secLineMessageKeyCodeValueField+":TransactionTimerTimeout");
-//        query.add(ZXGJParserHelper.facetSECDate,ZXGJParserHelper.secLineTimeStampField);
-//        query.add(ZXGJParserHelper.facetSECDateStartField,"2015-01-23T11:35:34.653Z");
-//        query.add(ZXGJParserHelper.facetSECDateEndField,"2015-01-23T11:36:39.096Z");
-////        query.add(ZXGJParserHelper.facetSECDateGapField,"%2B1SECOND");   
-//        query.add(ZXGJParserHelper.facetSECDateGapField,"+1SECOND"); 
-    
+ 
     public SolrQuery getQueryByName(String name,Map<String,String> params){
     	 SolrQuery query = new SolrQuery();
          if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetAllSECMsgKeyValue)){
@@ -53,8 +45,67 @@ public class SECQueryFactory {
         	 query.setQuery("*:*");
         	 query.setFilterQueries(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+ZXGJParserHelper.TransactionTimeoutMsgKeyValue,
           			 ZXGJParserHelper.nodeNameField+":"+nodeName);  
-         }
+         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryLogEventsByTimeRange)){
+         	 query.setQuery("*:*");
+         	 query.setFacet(true);
+         	query.addFacetField(ZXGJParserHelper.secLineMessageKeyCodeValueField);  
+         	// [2015-01-23T11:35:34.653Z TO 2015-01-23T11:36:40.653Z]
+         	int amount = (60-34)+(40)-1;
+         	int min=35;
+         	int sec=34;
+         	for(int i=0;i<amount;i++){         		
+                if(sec < 59){   
+         		   query.addFacetQuery(ZXGJParserHelper.secLineTimeStampField+":[2015-01-23T11:"+min+":"+sec+".000Z TO 2015-01-23T11:"+min+":"+(sec+1)+".000Z}");
+                }else{
+                  query.addFacetQuery(ZXGJParserHelper.secLineTimeStampField+":[2015-01-23T11:"+min+":"+sec+".000Z TO 2015-01-23T11:"+(min+1)+":00.000Z}");
+                  min++;
+                  sec=0;
+                }
+                sec++;
+            }
+         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryTransactionTimeoutByTimeRangeByNode)){
+        	 String nodeName = params.get(ZXGJParserHelper.nodeNameField);
+        	 query.setQuery("*:*");
+        	 query.setFilterQueries(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+ZXGJParserHelper.TransactionTimeoutMsgKeyValue,
+        			 ZXGJParserHelper.nodeNameField+":"+nodeName);
+         	 query.setFacet(true); 
+         	// [2015-01-23T11:35:34.653Z TO 2015-01-23T11:36:40.653Z]
+         	int amount = (60-34)+(40)-1;
+         	int min=35;
+         	int sec=34;
+         	for(int i=0;i<amount;i++){         		
+                if(sec < 59){   
+         		   query.addFacetQuery(ZXGJParserHelper.secLineTimeStampField+":[2015-01-23T11:"+min+":"+sec+".000Z TO 2015-01-23T11:"+min+":"+(sec+1)+".000Z}");
+                }else{
+                  query.addFacetQuery(ZXGJParserHelper.secLineTimeStampField+":[2015-01-23T11:"+min+":"+sec+".000Z TO 2015-01-23T11:"+(min+1)+":00.000Z}");
+                  min++;
+                  sec=0;
+                }
+                sec++;
+            }
+         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryTransactionTimeoutByTimeRange)){
+        	 query.setQuery("*:*");
+        	 query.setFilterQueries(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+ZXGJParserHelper.TransactionTimeoutMsgKeyValue);
+        	 query.setFacet(true); 
+         	// [2015-01-23T11:35:34.653Z TO 2015-01-23T11:36:40.653Z]
+         	int amount = (60-34)+(40)-1;
+         	int min=35;
+         	int sec=34;
+         	for(int i=0;i<amount;i++){         		
+                if(sec < 59){   
+         		   query.addFacetQuery(ZXGJParserHelper.secLineTimeStampField+":[2015-01-23T11:"+min+":"+sec+".000Z TO 2015-01-23T11:"+min+":"+(sec+1)+".000Z}");
+                }else{
+                  query.addFacetQuery(ZXGJParserHelper.secLineTimeStampField+":[2015-01-23T11:"+min+":"+sec+".000Z TO 2015-01-23T11:"+(min+1)+":00.000Z}");
+                  min++;
+                  sec=0;
+                }
+                sec++;
+            }
+         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryDetailLogEventsWithinSecond)){
+             String date = params.get(ZXGJParserHelper.paramDate);
+        	 query.setQuery("*:*");
+        	 query.setFilterQueries(ZXGJParserHelper.secLineTimeStampField+": ["+date+"-1SECOND"+" TO "+date+"+1SECOND ]");
+         }				
          return query;    	
-    }
-    
+    }        
 }

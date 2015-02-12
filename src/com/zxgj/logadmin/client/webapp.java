@@ -9,6 +9,7 @@ import com.zxgj.logadmin.client.zxgj.ZXGJKnowledgePanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJSECMainPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJSearchPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJTimeSeriesPanel;
+import com.zxgj.logadmin.client.zxgj.ZXGJTimeSeriesPanelLargeAmountData;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
@@ -57,6 +58,8 @@ public class webapp implements EntryPoint {
 		ZXGJTimeSeriesPanel plotPanel = new ZXGJTimeSeriesPanel();
 		plotPanel.createPlotComponent();
 		
+		ZXGJTimeSeriesPanelLargeAmountData plot2Panel = new ZXGJTimeSeriesPanelLargeAmountData();
+		plot2Panel.createPlotComponent();
 		
 		ZXGJEPAEventPanel eventPanel = new ZXGJEPAEventPanel();
 		eventPanel.createEventComponent();
@@ -71,6 +74,7 @@ public class webapp implements EntryPoint {
 		tp.add(secMainPanel,"secMain");
 	    tp.add(epsMainPanel, "epsMain");	
 	    tp.add(plotPanel, "时域分布图");
+	    tp.add(plot2Panel, "zoomable plot");
 	    tp.add(searchPanel, "Search");	 
 	    tp.add(eventPanel,"EPAEvent");
 	    tp.add(commentPanel,"EPAComments");

@@ -13,4 +13,8 @@ public interface SECLogService extends RemoteService {
 	SECNodeTimeout getTimeoutLinesOffsetByNodeName(String nodeName,long lineNum, int offset) throws IllegalArgumentException;
     SECNodeTimeout[] getTimeoutPerNode() throws IllegalArgumentException;
     SECNodeTimeout getTimeoutLinesByNode(String nodeName) throws IllegalArgumentException;
+    Integer[] getLogEventsPerSecond() throws IllegalArgumentException;  
+    Integer[] getTimeoutByTimeSeriesBySecondByNode(String node) throws IllegalArgumentException;
+    Integer[] getTimeoutByTimeSeriesBySecond() throws IllegalArgumentException;
+    String[] getLogEventsBySecond(String date) throws IllegalArgumentException;
 }

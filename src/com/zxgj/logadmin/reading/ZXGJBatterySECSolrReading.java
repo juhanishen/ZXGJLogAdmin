@@ -1,5 +1,6 @@
 package com.zxgj.logadmin.reading;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,28 +25,47 @@ public class ZXGJBatterySECSolrReading {
         SolrServer solr = new HttpSolrServer(urlString);	
 //        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryGetAllSECMsgKeyValue,null);
 //        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryGetTransactionTimeoutByTimeSeriesByNode1,null);
-        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryGetTransactionTimeoutPerNode,null);
+//        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryGetTransactionTimeoutPerNode,null);
+//        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryLogEventsByTimeRange,null);
+        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryTransactionTimeoutByTimeRange,null);
+
+////        Map<String,String> params = new HashMap<String,String>();
+////        params.put(ZXGJParserHelper.nodeNameField, ZXGJParserHelper.NodeName1);
+////        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryTransactionTimeoutByTimeRangeByNode,params);
+
+///        Map<String,String> params = new HashMap<String,String>();
+///        String date = "2015-01-23T11:35:34.653Z";
+///        params.put(ZXGJParserHelper.paramDate, date);
+//        SolrQuery query = SECQueryFactory.getInstance().getQueryByName(ZXGJParserHelper.queryDetailLogEventsWithinSecond,params);
 
         
+        
+        System.out.println(query.toString());
         QueryResponse response = solr.query(query);        
         
-        Map<String, Integer> facetQueryRes = response.getFacetQuery();
-        System.out.println("facet query response size is:"+facetQueryRes);        
-        for(String key:facetQueryRes.keySet()){
-            System.out.println("Key is:"+key+" ,value is:"+facetQueryRes.get(key));            	
-        }
-               
-       List<FacetField> cat = response.getFacetFields();
-       System.out.println("facet fields length is:"+cat.size());
-       for(FacetField key: cat){
-    	   System.out.println("key is "+key.getName()+",value is:"+key.getValueCount());
-    	   List<Count> values = key.getValues();
-    	   for(Count c : values){
-    			   System.out.println(c.getName()+":"+c.getCount());
-    	   }
-       }
         
-      System.out.println("response header is:"+response.getResponseHeader().toString());  
+        Map<String, Integer> facetQueryRes = response.getFacetQuery();
+         System.out.println("facet query response size is:"+facetQueryRes);
+        if(facetQueryRes!=null){
+          
+            for(String key:facetQueryRes.keySet()){
+                System.out.println("Key is:"+key+" ,value is:"+facetQueryRes.get(key));            	
+            }
+        }      
+        
+        List<FacetField> cat = response.getFacetFields();
+        if(cat != null){
+            System.out.println("facet fields length is:"+cat.size());
+            for(FacetField key: cat){
+    	        System.out.println("key is "+key.getName()+",value is:"+key.getValueCount());
+    	        List<Count> values = key.getValues();
+    	        for(Count c : values){
+    			    System.out.println(c.getName()+":"+c.getCount());
+    	        }
+    
+            }
+        }
+        System.out.println("response header is:"+response.getResponseHeader().toString());  
         
       SolrDocumentList results = response.getResults();
       System.out.println("number of result is:"+results.getNumFound());

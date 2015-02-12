@@ -1,5 +1,6 @@
 package com.zxgj.logadmin.server;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -199,7 +200,7 @@ public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogSer
             LineNumberAndLineValue lineParam = new LineNumberAndLineValue();
             timeoutLines.getTransactionTimoutLines().add(lineParam);
             for(String fieldName: doc.getFieldNames()){
-          	    System.out.println("fieldName is"+fieldName+",Value is "+doc.getFieldValue(fieldName));
+//          	    System.out.println("fieldName is"+fieldName+",Value is "+doc.getFieldValue(fieldName));
           	    if(fieldName.equalsIgnoreCase(ZXGJParserHelper.lineValueField)){          	    	
           	    	timeoutLines.getTransactionTimoutLines().get(i).setLineValue((String) doc.getFieldValue(fieldName));
           	    }
@@ -210,6 +211,168 @@ public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogSer
         }
         return timeoutLines;
         
+	}
+
+
+
+
+	@Override
+	public Integer[] getLogEventsPerSecond() throws IllegalArgumentException {
+		 SolrServer solr = new HttpSolrServer(urlString);
+		List<Integer> numsList = new ArrayList<Integer>();   
+	    SolrQuery query = SECQueryFactory.getInstance().getQueryByName(
+		    		ZXGJParserHelper.queryLogEventsByTimeRange,null);
+	    
+	    QueryResponse response = null;
+        try {
+			response = solr.query(query);
+		} catch (SolrServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    Map<String, Integer> facetQueryRes = response.getFacetQuery();
+//        System.out.println("facet query response size is:"+facetQueryRes);
+        if(facetQueryRes!=null){
+         
+           for(String key:facetQueryRes.keySet()){
+//               System.out.println("Key is:"+key+" ,value is:"+facetQueryRes.get(key));            	
+               numsList.add(facetQueryRes.get(key)); 
+           }
+        }     
+	    
+        Integer[] nums = new Integer[numsList.size()]; 
+        int i=0;
+        for(Object obj:numsList){
+        	nums[i++]=(Integer) obj;
+        }
+        return nums;		
+	}
+
+
+
+
+	@Override
+	public Integer[] getTimeoutByTimeSeriesBySecondByNode(String node)
+			throws IllegalArgumentException {
+		List<Integer> numsList = new ArrayList<Integer>(); 
+		SolrServer solr = new HttpSolrServer(urlString);
+		Map<String,String> params = new HashMap<String,String>();
+		params.put(ZXGJParserHelper.nodeNameField, node);
+	    SolrQuery query = SECQueryFactory.getInstance().getQueryByName(
+		    		ZXGJParserHelper.queryTransactionTimeoutByTimeRangeByNode,params);
+	    
+	    QueryResponse response = null;
+        try {
+			response = solr.query(query);
+		} catch (SolrServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    Map<String, Integer> facetQueryRes = response.getFacetQuery();
+//        System.out.println("facet query response size is:"+facetQueryRes);
+        if(facetQueryRes!=null){
+         
+           for(String key:facetQueryRes.keySet()){
+//               System.out.println("Key is:"+key+" ,value is:"+facetQueryRes.get(key));            	
+               numsList.add((Integer)facetQueryRes.get(key)); 
+           }
+        }     
+	    
+        Integer[] nums = new Integer[numsList.size()]; 
+        int i=0;
+        for(Object obj:numsList){
+        	nums[i++]=(Integer) obj;
+        }
+        return nums;	
+	}
+
+
+
+
+	@Override
+	public Integer[] getTimeoutByTimeSeriesBySecond()
+			throws IllegalArgumentException {
+		
+		System.out.println("======================");
+		System.out.println("========getTimeoutByTimeSeriesBySecond==");
+		System.out.println("======================");
+		List<Integer> numsList = new ArrayList<Integer>(); 
+		SolrServer solr = new HttpSolrServer(urlString);
+	    SolrQuery query = SECQueryFactory.getInstance().getQueryByName(
+		    		ZXGJParserHelper.queryTransactionTimeoutByTimeRange,null);
+	    
+	    QueryResponse response = null;
+        try {
+			response = solr.query(query);
+		} catch (SolrServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    Map<String, Integer> facetQueryRes = response.getFacetQuery();
+//        System.out.println("facet query response size is:"+facetQueryRes);
+        if(facetQueryRes!=null){
+         
+           for(String key:facetQueryRes.keySet()){
+               System.out.println("Key is:"+key+" ,value is:"+facetQueryRes.get(key));            	
+               numsList.add((Integer)facetQueryRes.get(key)); 
+           }
+        }     
+	    
+        Integer[] nums = new Integer[numsList.size()]; 
+        int i=0;
+        for(Integer obj:numsList){
+        	nums[i++]= obj;
+        }
+        return nums;	
+	}
+
+
+
+
+	@Override
+	public String[] getLogEventsBySecond(String date)
+			throws IllegalArgumentException {
+		List<String> linesArr = new ArrayList<String>();
+		String[] dateStr = date.split(ZXGJParserHelper.space);
+		String dateNew = dateStr[0]+"T"+dateStr[1]+"Z";
+		Map<String,String> params = new HashMap<String,String>(); 
+		params.put(ZXGJParserHelper.paramDate, dateNew);
+		SolrServer solr = new HttpSolrServer(urlString);
+	    SolrQuery query = SECQueryFactory.getInstance().getQueryByName(
+		    		ZXGJParserHelper.queryDetailLogEventsWithinSecond,params);
+	    
+	    QueryResponse response = null;
+        try {
+			response = solr.query(query);
+		} catch (SolrServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    SolrDocumentList results = response.getResults();
+	    System.out.println("number of result is:"+results.getNumFound());
+
+//	        for (int i = 0; i < results.size(); ++i) {
+	    int range = Math.min(10, results.size());
+	    for (int i = 0; i <range; ++i) { 
+	        SolrDocument doc = results.get(i);	
+	        for(String fieldName: doc.getFieldNames()){
+	            System.out.println("fieldName is"+fieldName+",Value is "+doc.getFieldValue(fieldName));
+	        	if(fieldName.equals(ZXGJParserHelper.lineValueField)){
+	        		linesArr.add((String)doc.getFieldValue(fieldName));	
+	            }
+	        }
+	    }
+	    
+	    String[] ret = new String[linesArr.size()];
+	    int i=0;
+	    for(String str : linesArr){
+	    	ret[i++] = str;
+	    }
+	    return ret;
 	}
 
 }

@@ -61,13 +61,19 @@ public class ZXGJParserHelper {
 	public static final String queryGetTransactionTimeoutByTimeSeriesByNode2 = "getTransactionTimeoutByTimeSeriesByNode2";
     public static final String queryGetTransactionTimeoutLinesOffsetInNode = "getTransactionTimeoutLinesOffsetInNode";
     public static final String queryGetTransactionTimeoutLinesByNode = "getTransactionTimeoutLinesByNode";
+    public static final String queryLogEventsByTimeRange = "getLogEventsByTimeRange";
+    public static final String queryTransactionTimeoutByTimeRangeByNode = "getTransactionTimeoutByTimeRangeByNode"; 
+    public static final String queryTransactionTimeoutByTimeRange = "getTransactionTimeoutByTimeSeries";
+    public static final String queryDetailLogEventsWithinSecond = "getDetailLogEventsWithinSecond";
+    
+    public static final String TransactionTimeoutMsgKeyValue = "TransactionTimerTimeout";
 	
-	public static final String TransactionTimeoutMsgKeyValue = "TransactionTimerTimeout";
-	public static final String NodeName1 = "node1";
+    public static final String NodeName1 = "node1";
 	public static final String NodeName2 = "node2";
 	
 	public static final String paramOFFSET="offset";
 	public static final String paramLINENUM = "lineNum";
+	public static final String paramDate="UTCTime";
 	
 	public static boolean doesLineStartWithDigit(String line){
 		return line.startsWith("0") || line.startsWith("1") ||

@@ -1,2 +1,0 @@
-serviceClass: com.zxgj.logadmin.client.SECLogService
-path: 1D8D2BAA681DE35D5043AE1378A438A7.gwt.rpc

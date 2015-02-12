@@ -9,4 +9,8 @@ public interface SECLogServiceAsync {
     void getTimeoutLinesOffsetByNodeName(String nodeName,long lineNum, int offset,AsyncCallback<SECNodeTimeout> callback) throws IllegalArgumentException;
 	void getTimeoutPerNode(AsyncCallback<SECNodeTimeout[]> callback) throws IllegalArgumentException;
 	void getTimeoutLinesByNode(String nodeName,AsyncCallback<SECNodeTimeout> callback) throws IllegalArgumentException;
+	void getLogEventsPerSecond(AsyncCallback<Integer[]> callback) throws IllegalArgumentException; 
+    void getTimeoutByTimeSeriesBySecondByNode(String node,AsyncCallback<Integer[]> callback) throws IllegalArgumentException;
+    void getTimeoutByTimeSeriesBySecond(AsyncCallback<Integer[]> callback) throws IllegalArgumentException;
+    void getLogEventsBySecond(String date,AsyncCallback<String[]> callback) throws IllegalArgumentException;
 }
