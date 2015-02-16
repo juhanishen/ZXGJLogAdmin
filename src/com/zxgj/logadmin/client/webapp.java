@@ -11,12 +11,17 @@ import com.zxgj.logadmin.client.zxgj.ZXGJSearchPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJTimeSeriesPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJTimeSeriesPanelLargeAmountData;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.LoadListener;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -96,16 +101,25 @@ private void createImageMap() {
     RootPanel.get("imagemap").add(image); 
 
     // CREATE SHAPES 
-    AreaWidget node2 = new AreaWidget("rect", "419, 19, 682, 133", "Node2", 
-                new SolarSystemCommand("Node2")); 
-    AreaWidget node1 = new AreaWidget("rect", "22, 20, 256, 126", "Node1", 
-                new SolarSystemCommand("Node1")); 
+    AreaWidget node6 = new AreaWidget("rect", "534, 157, 670, 214", "Node6", 
+                new SolarSystemCommand("Node6")); 
+    AreaWidget node5 = new AreaWidget("rect", "325, 158, 469, 217", "Node5", 
+                new SolarSystemCommand("Node5")); 
+    
+    AreaWidget node4 = new AreaWidget("rect", "115, 168, 220, 219", "Node4", 
+            new SolarSystemCommand("Node4")); 
+    AreaWidget node3 = new AreaWidget("rect", "539, 16, 668, 76", "Node3", 
+            new SolarSystemCommand("Node3")); 
+    AreaWidget node2 = new AreaWidget("rect", "324, 14, 454, 76", "Node2", 
+            new SolarSystemCommand("Node2")); 
+    AreaWidget node1 = new AreaWidget("rect", "106, 16, 219, 79", "Node1", 
+            new SolarSystemCommand("Node1")); 
 //    AreaWidget venus = new AreaWidget("circle", "124 58 8", "Venus", 
 //                new SolarSystemCommand("Venus")); 
     // CREATE MAP 
 //    final MapWidget map = new MapWidget(new AreaWidget[] { sun, mercury, 
 //                venus }); 
-    final MapWidget map = new MapWidget(new AreaWidget[] { node1, node2 });
+    final MapWidget map = new MapWidget(new AreaWidget[] { node1, node2,node3,node4,node5,node6 });
 
     map.setID("planetmap");  
     map.setName("planetmap"); 
@@ -134,7 +148,31 @@ class SolarSystemCommand implements Command {
     } 
 
     public void execute() { 
-        Window.alert("You've clicked: " +cell+ ", this will begin the process to collect "+cell+" logs"); 
+//        Window.alert("You've clicked: " +cell+ ", this will begin the process to collect "+cell+" logs"); 
+    	final DialogBox dialogBox = new DialogBox();
+    	dialogBox.setWidth("500px");
+    	dialogBox.setHeight("400px");
+    	dialogBox.setTitle("This is "+cell+" remote console");
+    	dialogBox.setText("Computer: "+cell+ "'s remote terminal is opened: Here one could manipulate remote computer logs,"
+    			+ "and do some remote operation, for example check memory and cpu usage...");
+    	Button example = new Button("Check node Memory Usage");
+    	example.addClickHandler(new ClickHandler() {
+          public void onClick(ClickEvent event) {
+             dialogBox.setText("Here would be remote computer/node memory usage");
+          }
+        });
+    	Button close = new Button("Close this diaglog");
+    	close.addClickHandler(new ClickHandler() {
+          public void onClick(ClickEvent event) {
+             dialogBox.hide();
+          }
+        });
+    	VerticalPanel vp = new VerticalPanel();
+    	vp.add(example);
+    	vp.add(close);
+        dialogBox.setWidget(vp);
+        RootPanel.get("dialogbox").add(dialogBox);
+        dialogBox.show();
     } 
 } 
 }
