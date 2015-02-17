@@ -11,27 +11,26 @@ public class ZXGJSECMainPanel extends VerticalPanel {
 		
 		
 		ZXGJSECMsgKeyValueTotalPanel MsgKeyValueTotalPanel = 
-				       new ZXGJSECMsgKeyValueTotalPanel();
+				       new ZXGJSECMsgKeyValueTotalPanel(this);
 		MsgKeyValueTotalPanel.createMsgKeyValueTable();
 
 		
-		ZXGJSECMsgKeyValueBreakDownPanel breakdownPanel = new ZXGJSECMsgKeyValueBreakDownPanel();
-		breakdownPanel.createBreakDownTableComponents();
+//		ZXGJSECMsgKeyValueBreakDownPanel breakdownPanel = new ZXGJSECMsgKeyValueBreakDownPanel();
+//		breakdownPanel.createBreakDownTableComponents();
 
-		
 		ZXGJSECMsgKeyValuePlotPanel plotPanel = 
 				       new ZXGJSECMsgKeyValuePlotPanel();
 		plotPanel.createPlotComponents();
-		
-		ZXGJSECNodeTimeoutLinesPanel node1TimeoutLinesPanel = new 
-				ZXGJSECNodeTimeoutLinesPanel();
-		node1TimeoutLinesPanel.createTimeoutLinesTableComponents();
+//		
+//		ZXGJSECNodeTimeoutLinesPanel node1TimeoutLinesPanel = new 
+//				ZXGJSECNodeTimeoutLinesPanel();
+//		node1TimeoutLinesPanel.createTimeoutLinesTableComponents();
 		
 		
 		add(MsgKeyValueTotalPanel);
-		add(breakdownPanel);
-		add(plotPanel);
-		add(node1TimeoutLinesPanel);                    
+//		add(breakdownPanel);
+        add(plotPanel);
+//		add(node1TimeoutLinesPanel);                    
 	}
 
 }

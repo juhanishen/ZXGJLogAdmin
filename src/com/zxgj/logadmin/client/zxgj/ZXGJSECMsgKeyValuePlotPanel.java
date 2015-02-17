@@ -31,10 +31,15 @@ public class ZXGJSECMsgKeyValuePlotPanel extends VerticalPanel {
 		final HorizontalPanel nodeCheckBoxPanel = new HorizontalPanel();
 		final CheckBox node1CheckBox = new CheckBox("node1");
 		final CheckBox node2CheckBox = new CheckBox("node2");
+		final CheckBox clearAll = new CheckBox("Clear All");
 		node1CheckBox.setValue(false);
 		node2CheckBox.setValue(false);
+		clearAll.setValue(false);
+		
 		nodeCheckBoxPanel.add(node1CheckBox);
 		nodeCheckBoxPanel.add(node2CheckBox);
+		nodeCheckBoxPanel.add(clearAll);
+		
 		
 		//search highcharts code are here: start:		
         final Chart nodeChart = new Chart()
@@ -136,6 +141,16 @@ public class ZXGJSECMsgKeyValuePlotPanel extends VerticalPanel {
 				}
 		    });
 	          	
+		    
+		    clearAll.addClickHandler(new ClickHandler() {
+		        @Override
+			    public void onClick(ClickEvent event) {	        	
+		            final boolean checked = ((CheckBox) event.getSource()).getValue();
+		            if(checked){
+                    	nodeChart.removeAllSeries(true);       			
+                    }
+                }
+	         });
 	}
 	
 	private final long getTime(String date) {  

@@ -20,7 +20,7 @@ import com.zxgj.logadmin.client.SECLogService;
 import com.zxgj.logadmin.reading.SECQueryFactory;
 import com.zxgj.logadmin.shared.LineNumberAndLineValue;
 import com.zxgj.logadmin.shared.SECMsgKeyValue;
-import com.zxgj.logadmin.shared.SECNodeTimeout;
+import com.zxgj.logadmin.shared.SECMsgKeyValuePerNode;
 import com.zxgj.logadmin.shared.ZXGJParserHelper;
 
 
@@ -74,13 +74,14 @@ public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogSer
    
 
 	@Override
-	public SECNodeTimeout[] getTimeoutPerNode() throws IllegalArgumentException {
+	public SECMsgKeyValuePerNode[] getMsgKeyValuePerNode(String msgKeyValue) throws IllegalArgumentException {
 
-		SECNodeTimeout[] secNodeTimeouts = new SECNodeTimeout[ZXGJParserHelper.NodeNumber];
-		
+		SECMsgKeyValuePerNode[] secNodeTimeouts = new SECMsgKeyValuePerNode[ZXGJParserHelper.NodeNumber];
+		Map<String,String> keyMsgValue =new HashMap<String,String>();
+		keyMsgValue.put(ZXGJParserHelper.paramMsgKeyValue,msgKeyValue);
 	    SolrServer solr = new HttpSolrServer(urlString);
         SolrQuery query = SECQueryFactory.getInstance().getQueryByName(
-	    		ZXGJParserHelper.queryGetTransactionTimeoutPerNode,null);
+	    		ZXGJParserHelper.queryGetMsgKeyValueAmountPerNode,keyMsgValue);
 	    
 	    QueryResponse response = null;
         try {
@@ -101,11 +102,12 @@ public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogSer
      	   List<Count> values = key.getValues();	       
      	   int index = 0;
      	   for(Count c : values){
-     		       SECNodeTimeout nodeTime = new SECNodeTimeout();
-     		       nodeTime.setNodeName(c.getName());
-     		       nodeTime.setTransactionTimoutAmount(c.getCount());    		       
+     		       SECMsgKeyValuePerNode keyValueRow = new SECMsgKeyValuePerNode();
+     		        keyValueRow.setNodeName(c.getName());
+     		       keyValueRow.setMsgKeyValue(msgKeyValue);
+     		       keyValueRow.setAmount(c.getCount());    		       
      			   System.out.println(c.getName()+":"+c.getCount());
-     			   secNodeTimeouts[index++]=nodeTime;
+     			   secNodeTimeouts[index++]=keyValueRow;
      	   }
         }
     
@@ -116,9 +118,9 @@ public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogSer
 
 
 	@Override
-	public SECNodeTimeout getTimeoutLinesOffsetByNodeName(String nodeName,
+	public SECMsgKeyValuePerNode getTimeoutLinesOffsetByNodeName(String nodeName,
 			long lineNum, int offset) throws IllegalArgumentException {
-		SECNodeTimeout timeoutLineWithOffsets = new SECNodeTimeout();
+		SECMsgKeyValuePerNode timeoutLineWithOffsets = new SECMsgKeyValuePerNode();
 		Map<String,String> params = new HashMap<String,String>();
 		params.put(ZXGJParserHelper.paramOFFSET,String.valueOf(offset));
 		params.put(ZXGJParserHelper.paramLINENUM,String.valueOf(lineNum));
@@ -148,14 +150,14 @@ public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogSer
         for (int i = 0; i <range; ++i) { 
             SolrDocument doc = results.get(i);
             LineNumberAndLineValue lineParam = new LineNumberAndLineValue();
-            timeoutLineWithOffsets.getTransactionTimoutLines().add(lineParam);
+            timeoutLineWithOffsets.getKeyValueLines().add(lineParam);
             for(String fieldName: doc.getFieldNames()){
           	    System.out.println("fieldName is"+fieldName+",Value is "+doc.getFieldValue(fieldName));
           	    if(fieldName.equalsIgnoreCase(ZXGJParserHelper.lineValueField)){          	    	
-          	        timeoutLineWithOffsets.getTransactionTimoutLines().get(i).setLineValue((String) doc.getFieldValue(fieldName));
+          	        timeoutLineWithOffsets.getKeyValueLines().get(i).setLineValue((String) doc.getFieldValue(fieldName));
           	    }
           	    if(fieldName.equalsIgnoreCase(ZXGJParserHelper.lineNumField)){
-          	        timeoutLineWithOffsets.getTransactionTimoutLines().get(i).setLineNum((Long) doc.getFieldValue(fieldName));
+          	        timeoutLineWithOffsets.getKeyValueLines().get(i).setLineNum((Long) doc.getFieldValue(fieldName));
           	    }
             }
         }
@@ -167,17 +169,18 @@ public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogSer
 
 
 	@Override
-	public SECNodeTimeout getTimeoutLinesByNode(String nodeName)
+	public SECMsgKeyValuePerNode getMsgKeyValueLinesByNode(String msgKeyValue,String nodeName)
 			throws IllegalArgumentException {
-		SECNodeTimeout timeoutLines = new SECNodeTimeout();
+		SECMsgKeyValuePerNode timeoutLines = new SECMsgKeyValuePerNode();
 		timeoutLines.setNodeName(nodeName);
 		Map<String,String> params = new HashMap<String,String>();
 		params.put(ZXGJParserHelper.nodeNameField, nodeName);
+		params.put(ZXGJParserHelper.paramMsgKeyValue, msgKeyValue);
 	    SolrServer solr = new HttpSolrServer(urlString);
 	    
         SolrQuery query = null;
         query =	SECQueryFactory.getInstance().getQueryByName(
-	    		ZXGJParserHelper.queryGetTransactionTimeoutLinesByNode,params);
+	    		ZXGJParserHelper.queryGetMsgKeyValueLinesByNode,params);
  
         QueryResponse response = null;
         try {
@@ -198,14 +201,14 @@ public class SECLogServiceImpl extends RemoteServiceServlet implements SECLogSer
         for (int i = 0; i <range; ++i) { 
             SolrDocument doc = results.get(i);
             LineNumberAndLineValue lineParam = new LineNumberAndLineValue();
-            timeoutLines.getTransactionTimoutLines().add(lineParam);
+            timeoutLines.getKeyValueLines().add(lineParam);
             for(String fieldName: doc.getFieldNames()){
 //          	    System.out.println("fieldName is"+fieldName+",Value is "+doc.getFieldValue(fieldName));
           	    if(fieldName.equalsIgnoreCase(ZXGJParserHelper.lineValueField)){          	    	
-          	    	timeoutLines.getTransactionTimoutLines().get(i).setLineValue((String) doc.getFieldValue(fieldName));
+          	    	timeoutLines.getKeyValueLines().get(i).setLineValue((String) doc.getFieldValue(fieldName));
           	    }
           	    if(fieldName.equalsIgnoreCase(ZXGJParserHelper.lineNumField)){
-          	    	timeoutLines.getTransactionTimoutLines().get(i).setLineNum((Long) doc.getFieldValue(fieldName));
+          	    	timeoutLines.getKeyValueLines().get(i).setLineNum((Long) doc.getFieldValue(fieldName));
           	    }
             }
         }

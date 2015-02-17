@@ -56,11 +56,11 @@ public class ZXGJParserHelper {
 	public static final String facetSECDateGapField = "facet.date.gap";
 	
 	public static final String queryGetAllSECMsgKeyValue="getAllSECFileMsgKeyValue";	
-	public static final String queryGetTransactionTimeoutPerNode = "getTransactionTimeoutPerNode";
+	public static final String queryGetMsgKeyValueAmountPerNode = "getMsgKeyValueAmountPerNode";
 	public static final String queryGetTransactionTimeoutByTimeSeriesByNode1 = "getTransactionTimeoutByTimeSeriesByNode1";
 	public static final String queryGetTransactionTimeoutByTimeSeriesByNode2 = "getTransactionTimeoutByTimeSeriesByNode2";
     public static final String queryGetTransactionTimeoutLinesOffsetInNode = "getTransactionTimeoutLinesOffsetInNode";
-    public static final String queryGetTransactionTimeoutLinesByNode = "getTransactionTimeoutLinesByNode";
+    public static final String queryGetMsgKeyValueLinesByNode = "getMsgKeyValueLinesByNode";
     public static final String queryLogEventsByTimeRange = "getLogEventsByTimeRange";
     public static final String queryTransactionTimeoutByTimeRangeByNode = "getTransactionTimeoutByTimeRangeByNode"; 
     public static final String queryTransactionTimeoutByTimeRange = "getTransactionTimeoutByTimeSeries";
@@ -74,6 +74,8 @@ public class ZXGJParserHelper {
 	public static final String paramOFFSET="offset";
 	public static final String paramLINENUM = "lineNum";
 	public static final String paramDate="UTCTime";
+	public static final String paramMsgKeyValue = "msgKeyValue";
+
 	
 	public static boolean doesLineStartWithDigit(String line){
 		return line.startsWith("0") || line.startsWith("1") ||

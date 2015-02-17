@@ -27,7 +27,7 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.zxgj.logadmin.client.SECLogService;
 import com.zxgj.logadmin.client.SECLogServiceAsync;
-import com.zxgj.logadmin.shared.SECNodeTimeout;
+import com.zxgj.logadmin.shared.SECMsgKeyValuePerNode;
 
 public class ZXGJTimeSeriesPanel extends VerticalPanel {
 	

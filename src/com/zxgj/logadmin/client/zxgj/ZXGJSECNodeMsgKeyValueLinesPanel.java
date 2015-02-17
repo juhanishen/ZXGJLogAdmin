@@ -20,16 +20,26 @@ import com.zxgj.logadmin.client.SECLogService;
 import com.zxgj.logadmin.client.SECLogServiceAsync;
 import com.zxgj.logadmin.shared.EPARecord;
 import com.zxgj.logadmin.shared.LineNumberAndLineValue;
-import com.zxgj.logadmin.shared.SECNodeTimeout;
+import com.zxgj.logadmin.shared.SECMsgKeyValuePerNode;
 import com.zxgj.logadmin.shared.ZXGJParserHelper;
 
-public class ZXGJSECNodeTimeoutLinesPanel extends VerticalPanel {
+public class ZXGJSECNodeMsgKeyValueLinesPanel extends VerticalPanel {
 
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
 	private final SECLogServiceAsync secLogService = GWT
 			.create(SECLogService.class);
+	final ZXGJSECMainPanel secMainPanel;
+	final private String msgKeyValue;
+	final private String nodeName;
+	
+    public ZXGJSECNodeMsgKeyValueLinesPanel(ZXGJSECMainPanel secMainPanel,String msgKeyValue,String nodeName){
+    	this.secMainPanel = secMainPanel;
+    	this.msgKeyValue = msgKeyValue;
+    	this.nodeName = nodeName;
+    	setTitle(msgKeyValue+nodeName);
+    }
 	
 	public void createTimeoutLinesTableComponents(){
 		// Create a CellTable.
@@ -87,16 +97,16 @@ public class ZXGJSECNodeTimeoutLinesPanel extends VerticalPanel {
 	    ta.setWidth("500px");
 	    ta.setHeight("400px");
 	    
-	    secLogService.getTimeoutLinesByNode(
-	    		ZXGJParserHelper.NodeName1,new AsyncCallback<SECNodeTimeout>() {
+	    secLogService.getMsgKeyValueLinesByNode(msgKeyValue,
+	    		nodeName,new AsyncCallback<SECMsgKeyValuePerNode>() {
 					public void onFailure(Throwable caught) {
 						// Show the RPC error message to the user
 						
 					
 					}
 
-					public void onSuccess(SECNodeTimeout records) {
-						pairList.addAll(records.getTransactionTimoutLines());
+					public void onSuccess(SECMsgKeyValuePerNode records) {
+						pairList.addAll(records.getKeyValueLines());
 						
 						
 						ListHandler<LineNumberAndLineValue> lineNumberColumnSortHandler = new ListHandler<LineNumberAndLineValue>(
@@ -131,8 +141,7 @@ public class ZXGJSECNodeTimeoutLinesPanel extends VerticalPanel {
 
 						    // Add it to the root panel.
 						add(secTimeoutLinesTable);		
-						add(hPanel);
-						    
+						add(hPanel);  
 					}
 				});	
 	    
@@ -145,16 +154,16 @@ public class ZXGJSECNodeTimeoutLinesPanel extends VerticalPanel {
 
 	                final LineNumberAndLineValue value = event.getValue();
 	                secLogService.getTimeoutLinesOffsetByNodeName(ZXGJParserHelper.NodeName1,value.getLineNum(),Integer.parseInt(offsetsLB.getSelectedValue()),
-	    					new AsyncCallback<SECNodeTimeout>() {
+	    					new AsyncCallback<SECMsgKeyValuePerNode>() {
 	    						public void onFailure(Throwable caught) {
 	    							// Show the RPC error message to the user
 	    							ta.setText("Remote Procedure Call - Failure");
 	    						
 	    						}
 
-	    						public void onSuccess(SECNodeTimeout nodeTimeout) {	    							
+	    						public void onSuccess(SECMsgKeyValuePerNode nodeTimeout) {	    							
 	    							StringBuffer sb = new StringBuffer("Lines are :\n");
-                                    for(LineNumberAndLineValue lineNumberAndValue : nodeTimeout.getTransactionTimoutLines()){
+                                    for(LineNumberAndLineValue lineNumberAndValue : nodeTimeout.getKeyValueLines()){
                                         sb.append(lineNumberAndValue.getLineValue()+"\n");	
                                     }
                                     ta.setText(sb.toString());

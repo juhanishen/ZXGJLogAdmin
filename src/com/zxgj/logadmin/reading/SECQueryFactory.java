@@ -20,8 +20,8 @@ public class SECQueryFactory {
         	 query.setQuery("*:*");
              query.setFacet(true);
              query.addFacetField(ZXGJParserHelper.secLineMessageKeyCodeValueField);        	 
-         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetTransactionTimeoutPerNode)){
-        	 query.setQuery(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+ZXGJParserHelper.TransactionTimeoutMsgKeyValue);
+         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetMsgKeyValueAmountPerNode)){
+        	 query.setQuery(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+params.get(ZXGJParserHelper.paramMsgKeyValue.trim()));
         	 query.setFacet(true);
              query.addFacetField(ZXGJParserHelper.nodeNameField);        	 
          }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetTransactionTimeoutByTimeSeriesByNode1)){
@@ -40,10 +40,11 @@ public class SECQueryFactory {
              long lineNum = Long.parseLong(params.get(ZXGJParserHelper.paramLINENUM));      	 
         	 query.setQuery("*:*");
         	 query.setFilterQueries(ZXGJParserHelper.nodeNameField+":"+nodeName, ZXGJParserHelper.lineNumField+":[ "+Math.max(0,lineNum-offset)+ " TO " + (lineNum+offset)+" ]");  
-         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetTransactionTimeoutLinesByNode)){
+         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetMsgKeyValueLinesByNode)){
         	 String nodeName = params.get(ZXGJParserHelper.nodeNameField);
+        	 String msgKeyValue = params.get(ZXGJParserHelper.paramMsgKeyValue);
         	 query.setQuery("*:*");
-        	 query.setFilterQueries(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+ZXGJParserHelper.TransactionTimeoutMsgKeyValue,
+        	 query.setFilterQueries(ZXGJParserHelper.secLineMessageKeyCodeValueField+":"+msgKeyValue,
           			 ZXGJParserHelper.nodeNameField+":"+nodeName);  
          }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryLogEventsByTimeRange)){
          	 query.setQuery("*:*");

@@ -4,22 +4,32 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.ListDataProvider;
 import com.zxgj.logadmin.client.SECLogService;
 import com.zxgj.logadmin.client.SECLogServiceAsync;
+import com.zxgj.logadmin.shared.LineNumberAndLineValue;
 import com.zxgj.logadmin.shared.SECMsgKeyValue;
+import com.zxgj.logadmin.shared.SECMsgKeyValuePerNode;
+import com.zxgj.logadmin.shared.ZXGJParserHelper;
 
-public class ZXGJSECMsgKeyValueTotalPanel extends VerticalPanel {
+public class ZXGJSECMsgKeyValueTotalPanel extends VerticalPanel{
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
 	private final SECLogServiceAsync secLogService = GWT
 			.create(SECLogService.class);
+	final private ZXGJSECMainPanel secMainPanel;
+	
+	public ZXGJSECMsgKeyValueTotalPanel(ZXGJSECMainPanel secMainPanel){
+		this.secMainPanel = secMainPanel;
+	}
 
 	public void createMsgKeyValueTable() {
 		// Create a CellTable.
@@ -130,5 +140,29 @@ public class ZXGJSECMsgKeyValueTotalPanel extends VerticalPanel {
 					}
 				});		
 	    
+	    secMsgKeyValueTable.addCellPreviewHandler(new CellPreviewEvent.Handler<SECMsgKeyValue>() {
+
+	        @Override
+	        public void onCellPreview(final CellPreviewEvent<SECMsgKeyValue> event) {
+
+	            if (BrowserEvents.CLICK.equals(event.getNativeEvent().getType())) {
+	                final SECMsgKeyValue value = event.getValue();
+	                boolean existed = false;
+	                for(int i=0;i<secMainPanel.getWidgetCount();i++){
+	                	if(secMainPanel.getWidget(i).getTitle().equalsIgnoreCase(value.getMsgKeyValue())){
+	                		existed = true; 
+	                    }
+	                }
+	                if(!existed){
+	                    ZXGJSECMsgKeyValueBreakDownPanel breakDownPanel= new ZXGJSECMsgKeyValueBreakDownPanel(secMainPanel,value.getMsgKeyValue());
+ 	                    breakDownPanel.createBreakDownTableComponents();
+	                    secMainPanel.add(breakDownPanel);
+	                }
+	                final Boolean state = !event.getDisplay().getSelectionModel().isSelected(value);
+	                event.getDisplay().getSelectionModel().setSelected(value, state);
+	                event.setCanceled(true);
+	            }
+	        }
+	     });     
        }
 }
