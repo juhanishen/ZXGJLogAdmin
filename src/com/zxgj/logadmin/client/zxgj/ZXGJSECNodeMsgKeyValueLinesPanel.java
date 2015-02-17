@@ -18,7 +18,7 @@ import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.ListDataProvider;
 import com.zxgj.logadmin.client.SECLogService;
 import com.zxgj.logadmin.client.SECLogServiceAsync;
-import com.zxgj.logadmin.shared.EPARecord;
+import com.zxgj.logadmin.shared.EAPRecord;
 import com.zxgj.logadmin.shared.LineNumberAndLineValue;
 import com.zxgj.logadmin.shared.SECMsgKeyValuePerNode;
 import com.zxgj.logadmin.shared.ZXGJParserHelper;

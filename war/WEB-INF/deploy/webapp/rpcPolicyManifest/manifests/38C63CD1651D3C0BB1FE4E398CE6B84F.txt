@@ -1,0 +1,2 @@
+serviceClass: com.zxgj.logadmin.client.EAPLogService
+path: D05478DD0E84F15894CF3EFE19835C44.gwt.rpc

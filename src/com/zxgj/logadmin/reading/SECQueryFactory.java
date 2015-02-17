@@ -106,7 +106,13 @@ public class SECQueryFactory {
              String date = params.get(ZXGJParserHelper.paramDate);
         	 query.setQuery("*:*");
         	 query.setFilterQueries(ZXGJParserHelper.secLineTimeStampField+": ["+date+"-1SECOND"+" TO "+date+"+1SECOND ]");
-         }				
+         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryEAPGetAllComments)){
+        	 query.setQuery("*:*");
+        	 query.addFacetField(ZXGJParserHelper.normalLineCommentField); 
+         }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryEAPGetAllEvents)){
+        	 query.setQuery("*:*");
+        	 query.addFacetField(ZXGJParserHelper.normalLineEventField); 
+         }	         
          return query;    	
     }        
 }

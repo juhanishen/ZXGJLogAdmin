@@ -2,8 +2,8 @@ package com.zxgj.logadmin.client;
 
 import com.zxgj.logadmin.client.zxgj.AreaWidget;
 import com.zxgj.logadmin.client.zxgj.MapWidget;
-import com.zxgj.logadmin.client.zxgj.ZXGJEPACommentPanel;
-import com.zxgj.logadmin.client.zxgj.ZXGJEPAEventPanel;
+import com.zxgj.logadmin.client.zxgj.ZXGJEAPCommentPanel;
+import com.zxgj.logadmin.client.zxgj.ZXGJEAPEventPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJEPSMainPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJKnowledgePanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJSECMainPanel;
@@ -66,10 +66,10 @@ public class webapp implements EntryPoint {
 		ZXGJTimeSeriesPanelLargeAmountData plot2Panel = new ZXGJTimeSeriesPanelLargeAmountData();
 		plot2Panel.createPlotComponent();
 		
-		ZXGJEPAEventPanel eventPanel = new ZXGJEPAEventPanel();
+		ZXGJEAPEventPanel eventPanel = new ZXGJEAPEventPanel();
 		eventPanel.createEventComponent();
 		
-		ZXGJEPACommentPanel commentPanel = new ZXGJEPACommentPanel();
+		ZXGJEAPCommentPanel commentPanel = new ZXGJEAPCommentPanel();
 		commentPanel.createCommentComponent();
 		
 		ZXGJKnowledgePanel knowledgePanel = new ZXGJKnowledgePanel();

@@ -3,17 +3,17 @@ package com.zxgj.logadmin.server;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.zxgj.logadmin.client.LogLevelService;
-import com.zxgj.logadmin.shared.EPARecord;
+import com.zxgj.logadmin.shared.EAPRecord;
 
 @SuppressWarnings("serial")
 public class LogLevelServiceImpl extends RemoteServiceServlet implements LogLevelService {
 
 	@Override
-	public EPARecord[] getEAPRecords(String level) throws IllegalArgumentException {
+	public EAPRecord[] getEAPRecords(String level) throws IllegalArgumentException {
 		// TODO Auto method stub
-		EPARecord[] records = new EPARecord[3];
+		EAPRecord[] records = new EAPRecord[3];
 	    for(int i=0;i<records.length;i++){
-	    	records[i] = new EPARecord();
+	    	records[i] = new EAPRecord();
 	    }	
 		if(level.equalsIgnoreCase("WARN")){
 		    records[0].setTimeStamp("2014-08-23 10:59:57");

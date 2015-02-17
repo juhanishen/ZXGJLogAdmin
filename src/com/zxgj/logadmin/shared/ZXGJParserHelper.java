@@ -65,6 +65,10 @@ public class ZXGJParserHelper {
     public static final String queryTransactionTimeoutByTimeRangeByNode = "getTransactionTimeoutByTimeRangeByNode"; 
     public static final String queryTransactionTimeoutByTimeRange = "getTransactionTimeoutByTimeSeries";
     public static final String queryDetailLogEventsWithinSecond = "getDetailLogEventsWithinSecond";
+    public static final String queryEAPGetAllComments = "getEAPAllComments";
+    public static final String queryEAPGetAllEvents = "getEAPAllEvents";
+    
+    
     
     public static final String TransactionTimeoutMsgKeyValue = "TransactionTimerTimeout";
 	

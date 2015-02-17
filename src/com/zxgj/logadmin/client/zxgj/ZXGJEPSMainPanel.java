@@ -16,7 +16,7 @@ import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.ListDataProvider;
 import com.zxgj.logadmin.client.LogLevelService;
 import com.zxgj.logadmin.client.LogLevelServiceAsync;
-import com.zxgj.logadmin.shared.EPARecord;
+import com.zxgj.logadmin.shared.EAPRecord;
 
 
 public class ZXGJEPSMainPanel extends VerticalPanel {
@@ -151,7 +151,7 @@ public class ZXGJEPSMainPanel extends VerticalPanel {
 
 		                final LogClassification value = event.getValue();
 		                logLevelService.getEAPRecords(value.logLevel,
-		    					new AsyncCallback<EPARecord[]>() {
+		    					new AsyncCallback<EAPRecord[]>() {
 		    						public void onFailure(Throwable caught) {
 		    							// Show the RPC error message to the user
 		    							testBox
@@ -159,7 +159,7 @@ public class ZXGJEPSMainPanel extends VerticalPanel {
 		    						
 		    						}
 
-		    						public void onSuccess(EPARecord[] records) {
+		    						public void onSuccess(EAPRecord[] records) {
 		    							testBox.setText("Remote Procedure Call:\n"+
 		    									records[0].getTimeStamp()+":"+records[0].getLogLevel()+":"+records[0].getEvent()+":"+records[0].getComment()+"\n"+ 	
 		    									records[2].getTimeStamp()+":"+records[2].getLogLevel()+":"+records[2].getEvent()+":"+records[2].getComment()+"\n");

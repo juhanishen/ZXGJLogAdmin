@@ -3,48 +3,48 @@ package com.zxgj.logadmin.client.zxgj;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.view.client.ListDataProvider;
-import com.zxgj.logadmin.shared.EPARecord;
+import com.zxgj.logadmin.shared.EAPRecord;
 
 
-public class MainPanelLogLevelTable extends CellTable<EPARecord> {
-	ListDataProvider<EPARecord> listData;
+public class MainPanelLogLevelTable extends CellTable<EAPRecord> {
+	ListDataProvider<EAPRecord> listData;
 	
 	public MainPanelLogLevelTable(){}
 	
-   public CellTable<EPARecord> createTable(){
+   public CellTable<EAPRecord> createTable(){
 		setWidth("800px");
 		setHeight("600px");
 
 		 // Create timeStamp column.
-		TextColumn<EPARecord> timeStampColumn = new TextColumn<EPARecord>() {
+		TextColumn<EAPRecord> timeStampColumn = new TextColumn<EAPRecord>() {
 		      @Override
-		      public String getValue(EPARecord record) {
+		      public String getValue(EAPRecord record) {
 		        return record.getTimeStamp();
 		      }
 		};
 
 		// Create logLevel column.
-		TextColumn<EPARecord> logLevelColumn = new TextColumn<EPARecord>() {
+		TextColumn<EAPRecord> logLevelColumn = new TextColumn<EAPRecord>() {
 		      @Override
-		      public String getValue(EPARecord record) {
+		      public String getValue(EAPRecord record) {
 		        return record.getLogLevel();
 		      }
 		};
 		
 
 		// Create logLevel column.
-		TextColumn<EPARecord> eventColumn = new TextColumn<EPARecord>() {
+		TextColumn<EAPRecord> eventColumn = new TextColumn<EAPRecord>() {
 		      @Override
-		      public String getValue(EPARecord record) {
+		      public String getValue(EAPRecord record) {
 		        return record.getEvent();
 		      }
 		};
 		    
 
 		// Create logLevel column.
-		TextColumn<EPARecord> commentColumn = new TextColumn<EPARecord>() {
+		TextColumn<EAPRecord> commentColumn = new TextColumn<EAPRecord>() {
 		      @Override
-		      public String getValue(EPARecord record) {
+		      public String getValue(EAPRecord record) {
 		        return record.getComment();
 		      }
 		};
@@ -58,7 +58,7 @@ public class MainPanelLogLevelTable extends CellTable<EPARecord> {
          addColumn(commentColumn, "Comment");
 
 		 // Create a data provider.
-		ListDataProvider<EPARecord> dataProvider = new ListDataProvider<EPARecord>();
+		ListDataProvider<EAPRecord> dataProvider = new ListDataProvider<EAPRecord>();
 
 	    // Connect the table to the data provider.
 		dataProvider.addDataDisplay(this);
@@ -67,7 +67,7 @@ public class MainPanelLogLevelTable extends CellTable<EPARecord> {
 
 	}
    
-   public ListDataProvider<EPARecord> getListDataProvider(){
+   public ListDataProvider<EAPRecord> getListDataProvider(){
 	      return listData;
    }
 }

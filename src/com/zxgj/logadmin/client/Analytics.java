@@ -4,8 +4,8 @@ package com.zxgj.logadmin.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
-import com.zxgj.logadmin.client.zxgj.ZXGJEPACommentPanel;
-import com.zxgj.logadmin.client.zxgj.ZXGJEPAEventPanel;
+import com.zxgj.logadmin.client.zxgj.ZXGJEAPCommentPanel;
+import com.zxgj.logadmin.client.zxgj.ZXGJEAPEventPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJEPSMainPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJKnowledgePanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJSECMainPanel;
@@ -22,10 +22,10 @@ public class Analytics implements EntryPoint {
 		ZXGJEPSMainPanel epsMainPanel = new ZXGJEPSMainPanel();
 		epsMainPanel.createLogClassificationTable();
 		
-		ZXGJEPAEventPanel eventPanel = new ZXGJEPAEventPanel();
+		ZXGJEAPEventPanel eventPanel = new ZXGJEAPEventPanel();
 		eventPanel.createEventComponent();
 		
-		ZXGJEPACommentPanel commentPanel = new ZXGJEPACommentPanel();
+		ZXGJEAPCommentPanel commentPanel = new ZXGJEAPCommentPanel();
 		commentPanel.createCommentComponent();
 		
 		ZXGJKnowledgePanel knowledgePanel = new ZXGJKnowledgePanel();

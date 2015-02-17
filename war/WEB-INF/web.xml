@@ -36,6 +36,16 @@
     <url-pattern>/webapp/seclog</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>eapLog</servlet-name>
+    <servlet-class>com.zxgj.logadmin.server.EAPLogServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>eapLog</servlet-name>
+    <url-pattern>/webapp/eaplog</url-pattern>
+  </servlet-mapping>
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>webapp2.html</welcome-file>
