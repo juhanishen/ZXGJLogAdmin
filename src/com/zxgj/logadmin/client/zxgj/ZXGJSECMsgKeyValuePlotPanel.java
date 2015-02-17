@@ -99,6 +99,7 @@ public class ZXGJSECMsgKeyValuePlotPanel extends VerticalPanel {
 										nodeChart.addSeries(node1Series);
 										node1Series.setPoints(result,true);
 										nodeChart.redraw();
+										clearAll.setValue(false);
 									}           			
                         });
                     }else{
@@ -132,6 +133,7 @@ public class ZXGJSECMsgKeyValuePlotPanel extends VerticalPanel {
 										nodeChart.addSeries(node2Series); 
 										node2Series.setPoints(result,true);
 										nodeChart.redraw();
+										clearAll.setValue(false);
 									}           			
                         });
                     }else{
@@ -147,7 +149,10 @@ public class ZXGJSECMsgKeyValuePlotPanel extends VerticalPanel {
 			    public void onClick(ClickEvent event) {	        	
 		            final boolean checked = ((CheckBox) event.getSource()).getValue();
 		            if(checked){
-                    	nodeChart.removeAllSeries(true);       			
+                    	nodeChart.removeAllSeries(true); 
+                    	node1CheckBox.setValue(false);
+                    	node2CheckBox.setValue(false);
+                    	
                     }
                 }
 	         });
