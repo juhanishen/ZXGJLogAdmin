@@ -54,8 +54,8 @@ public class webapp implements EntryPoint {
 		ZXGJSECMainPanel secMainPanel = new ZXGJSECMainPanel();
 		secMainPanel.createComponents();
 		
-		ZXGJEPSMainPanel epsMainPanel = new ZXGJEPSMainPanel();
-		epsMainPanel.createLogClassificationTable();
+//		ZXGJEPSMainPanel epsMainPanel = new ZXGJEPSMainPanel();
+//		epsMainPanel.createLogClassificationTable();
 		
 		ZXGJSearchPanel searchPanel = new ZXGJSearchPanel();
 		searchPanel.createSearchComponents();
@@ -77,7 +77,7 @@ public class webapp implements EntryPoint {
 		
 		
 		tp.add(secMainPanel,"secMain");
-	    tp.add(epsMainPanel, "epsMain");	
+//	    tp.add(epsMainPanel, "epsMain");	
 	    tp.add(plotPanel, "时域分布图");
 	    tp.add(plot2Panel, "zoomable plot");
 	    tp.add(searchPanel, "Search");	 

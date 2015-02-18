@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -60,6 +61,10 @@ public class ZXGJEAPEventPanel extends VerticalPanel {
 	 	    // widget.
 	 	    final List<EAPRecord> eventList = eventDataProvider.getList();
 
+	 	    
+	 	    final SimplePager pager = new SimplePager();
+	 	    pager.setDisplay(eventTable);
+	 	    
             eapLogService.getEventsPerNode(new AsyncCallback<EAPRecord[]>(){
 
 				@Override
@@ -123,6 +128,7 @@ public class ZXGJEAPEventPanel extends VerticalPanel {
 			 	   eventTable.getColumnSortList().push(eventCountColumn);
 			 	   
 			 	    // Add it to the root panel.
+			 	    add(pager);
 			 	    add(eventTable);
 				}
             });

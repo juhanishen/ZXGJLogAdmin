@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -59,7 +60,9 @@ public class ZXGJEAPCommentPanel extends VerticalPanel {
 	    // Add the data to the data provider, which automatically pushes it to the
 	    // widget.
 	    final List<EAPRecord> commentList = commentDataProvider.getList();
-	    
+
+	    final SimplePager pager = new SimplePager();
+ 	    pager.setDisplay(commentTable);
 	    
 	    eapLogService.getCommentsPerNode(new AsyncCallback<EAPRecord[]>(){
 
@@ -126,6 +129,7 @@ public class ZXGJEAPCommentPanel extends VerticalPanel {
 			    commentTable.getColumnSortList().push(commentCountColumn);
 
 			    // Add it to the root panel.
+			    add(pager);
 			    add(commentTable);
 				
 			}    	
