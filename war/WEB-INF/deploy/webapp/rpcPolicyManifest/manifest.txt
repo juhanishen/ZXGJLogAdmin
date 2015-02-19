@@ -2,4 +2,3 @@
 # RPC service class, partial path of RPC policy file
 com.zxgj.logadmin.client.EAPLogService, D05478DD0E84F15894CF3EFE19835C44.gwt.rpc
 com.zxgj.logadmin.client.SECLogService, 331BFC74AA8EE208DF333AD589591643.gwt.rpc
-com.zxgj.logadmin.client.LogLevelService, FA7327F60742B8CAD8D84BFF75BD4E37.gwt.rpc
