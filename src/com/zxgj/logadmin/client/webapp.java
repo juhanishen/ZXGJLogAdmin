@@ -1,7 +1,11 @@
 package com.zxgj.logadmin.client;
 
+import org.moxieapps.gwt.highcharts.client.Chart;
+import org.moxieapps.gwt.highcharts.client.Series;
+
 import com.zxgj.logadmin.client.zxgj.AreaWidget;
 import com.zxgj.logadmin.client.zxgj.MapWidget;
+import com.zxgj.logadmin.client.zxgj.RemoteConsoleManagPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJEAPCommentPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJEAPEventPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJKnowledgePanel;
@@ -14,6 +18,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
@@ -31,9 +36,9 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class webapp implements EntryPoint {
 
-  private final LogLevelServiceAsync logLevelService = GWT
-			.create(LogLevelService.class);	
-	
+	private final LogLevelServiceAsync logLevelService = GWT
+			.create(LogLevelService.class);		
+  	
   final Image image = new Image(); 
   /**
    * This is the entry point method.
@@ -88,21 +93,7 @@ public class webapp implements EntryPoint {
 	    // Add it to the root panel.
 	    RootPanel.get("tabPanel").add(tp);
 	    
-	    logLevelService.readingServerMemory(new AsyncCallback<String>(){
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onSuccess(String result) {
-				Window.alert("propery and memory is:"+result);				
-			}
-	    	
-	    });
-   }
+  }
 
 private void createImageMap() {
     image.setUrl("nodeTopology.gif"); 
@@ -122,11 +113,7 @@ private void createImageMap() {
             new SolarSystemCommand("Node2","nodeTopologyNode2Selected.gif")); 
     AreaWidget node1 = new AreaWidget("rect", "106, 16, 219, 79", "Node1", 
             new SolarSystemCommand("Node1","nodeTopologyNode1Selected.gif")); 
-//    AreaWidget venus = new AreaWidget("circle", "124 58 8", "Venus", 
-//                new SolarSystemCommand("Venus")); 
-    // CREATE MAP 
-//    final MapWidget map = new MapWidget(new AreaWidget[] { sun, mercury, 
-//                venus }); 
+
     final MapWidget map = new MapWidget(new AreaWidget[] { node1, node2,node3,node4,node5,node6 });
 
     map.setID("planetmap");  
@@ -165,20 +152,66 @@ class SolarSystemCommand implements Command {
     	dialogBox.setAnimationEnabled(true);
     	
 
-    	VerticalPanel dialogVPanel = new VerticalPanel();
+    	final VerticalPanel dialogVPanel = new VerticalPanel();
     	dialogVPanel.add(new HTML("<br/>This is "+cell+" remote console<br/>"));
 		dialogVPanel.add(new HTML("<br/>Computer: "+cell+ "'s remote terminal is opened: Here one could manipulate remote computer logs</br>"));
 		dialogVPanel.add(new HTML("<br/>and do some remote operation, for example check memory and cpu usage...</br/>"));
 
-		Button example = new Button("Check node Memory Usage"); 	
+		Button example = new Button("Check node Memory Usage"); 
+//        final RemoteConsoleManagPanel memoryPanel = new RemoteConsoleManagPanel(cell);
+//        memoryPanel.drawMemoryConsumption();
+//        dialogVPanel.add(memoryPanel);
+        
         example.addClickHandler(new ClickHandler() {
           public void onClick(ClickEvent event) {
-             dialogBox.setText("Here would be remote computer/node memory usage");
+        	 dialogBox.setText("Here would be remote computer/node memory usage");
+        	 
+        	 
+        	 final Chart memoryChart = new Chart()
+  		      .setType(Series.Type.SPLINE)
+  		      .setChartTitleText("Free Memory Usage")
+  		      .setMarginRight(10);
+
+  		     final Series memorySeries = memoryChart.createSeries()
+  		       .setName("memory usage (MB)")
+  		       .setPoints(new Number[] {900,900,900});
+  		  
+  		     memoryChart.addSeries(memorySeries);
+  		     dialogVPanel.add(memoryChart);
+  		
+  		    final Timer t = new Timer() {
+  		      private int i=0;	
+  		      @Override
+  		      public void run() {
+  		    	 if(i< 20 ){ 
+  		    	    logLevelService.readingServerMemory(new AsyncCallback<String>(){
+
+  					    @Override
+  					    public void onFailure(Throwable caught) {
+  						    Window.alert("error"+caught.toString());
+  						
+  					    }
+
+  					    @Override
+  					    public void onSuccess(String result) {
+ // 					  	Window.alert("result is:"+result);
+  						    memorySeries.addPoint(Integer.valueOf(result));		       
+  		    	            memoryChart.redraw();	
+  		    	            i++;
+  					    }
+  		    			 
+  		    	    });
+  		    	    
+  		    	 }
+  		      }
+  		    };
+  		    
+  		    t.scheduleRepeating(5000);
           }
         });
     	Button close = new Button("Close this diaglog");
     	close.addClickHandler(new ClickHandler() {
-          public void onClick(ClickEvent event) {
+          public void onClick(ClickEvent event) {        	
              dialogBox.hide();
              image.setUrl("nodeTopology.gif"); 
           }
