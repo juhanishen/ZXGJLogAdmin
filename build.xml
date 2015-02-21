@@ -13,6 +13,7 @@
     <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA.jar"/>
     <pathelement location="${gwt.sdk}/validation-api-1.0.0.GA-sources.jar"/>
     <fileset dir="war/WEB-INF/lib" includes="**/*.jar"/>
+  	<fileset dir="war/WEB-INF/lib" includes="**/batteryZXGJ.properties"/>
     <!-- Add any additional non-server libs (such as JUnit) here -->
   </path>
 
@@ -34,8 +35,7 @@
 	<copy todir="war/WEB-INF/lib" file="lib/sigar.jar" />
 	<copy todir="war/WEB-INF/lib" file="lib/libsigar-amd64-linux.so" />
 	<copy todir="war/WEB-INF/lib" file="lib/libsigar-x86-linux.so" />
-  	<copy todir="war/WEB-INF/lib" file="lib/sigar-x86-winnt.dll" />
-  	<copy todir="war/WEB-INF/lib" file="lib/sigar-x86-winnt.lib" />
+  	<copy todir="war/WEB-INF/lib" file="lib/batteryZXGJ.properties" />
   </target>
 
   <target name="javac" depends="libs" description="Compile java source to bytecode">

@@ -1,0 +1,2 @@
+serviceClass: com.zxgj.logadmin.client.LogLevelService
+path: FA7327F60742B8CAD8D84BFF75BD4E37.gwt.rpc

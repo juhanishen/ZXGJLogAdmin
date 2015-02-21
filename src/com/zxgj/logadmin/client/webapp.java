@@ -10,9 +10,12 @@ import com.zxgj.logadmin.client.zxgj.ZXGJSearchPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJTimeSeriesPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJTimeSeriesPanelLargeAmountData;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
@@ -28,6 +31,9 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class webapp implements EntryPoint {
 
+  private final LogLevelServiceAsync logLevelService = GWT
+			.create(LogLevelService.class);	
+	
   final Image image = new Image(); 
   /**
    * This is the entry point method.
@@ -37,7 +43,7 @@ public class webapp implements EntryPoint {
 	    TabPanel tp = new TabPanel();
 	    
 	    createImageMap();
-
+        
 		
 		ZXGJSECMainPanel secMainPanel = new ZXGJSECMainPanel();
 		secMainPanel.createComponents();
@@ -81,6 +87,21 @@ public class webapp implements EntryPoint {
 
 	    // Add it to the root panel.
 	    RootPanel.get("tabPanel").add(tp);
+	    
+	    logLevelService.testReadingPropertyFile(new AsyncCallback<String>(){
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				Window.alert("propery and memory is:"+result);				
+			}
+	    	
+	    });
    }
 
 private void createImageMap() {

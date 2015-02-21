@@ -1,6 +1,13 @@
 package com.zxgj.logadmin.server;
 
 
+import java.io.IOException;
+import java.util.Properties;
+
+import org.hyperic.sigar.Mem;
+import org.hyperic.sigar.Sigar;
+import org.hyperic.sigar.SigarException;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.zxgj.logadmin.client.LogLevelService;
 import com.zxgj.logadmin.shared.EAPRecord;
@@ -8,6 +15,8 @@ import com.zxgj.logadmin.shared.EAPRecord;
 @SuppressWarnings("serial")
 public class LogLevelServiceImpl extends RemoteServiceServlet implements LogLevelService {
 
+ 
+	
 	@Override
 	public EAPRecord[] getEAPRecords(String level) throws IllegalArgumentException {
 		// TODO Auto method stub
@@ -49,5 +58,37 @@ public class LogLevelServiceImpl extends RemoteServiceServlet implements LogLeve
  
 		return records;
 	}
+
+	@Override
+	public String testReadingPropertyFile() throws IllegalArgumentException {
+//    	System.load("C:/sjj/project/ZXGJLogDemo/ZXGJLogAdmin/lib/sigar-amd64-winnt.dll");
+		System.load("/root/linuxConsole/lib/libsigar-amd64-linux.so");
+//		Properties props = new Properties();
+//		try {
+//			props.load(this.getClass().getResourceAsStream("batteryZXGJ.properties"));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		System.out.println("reading propery file succeeded:"+props.getProperty("LIB"));
+		
+		
+    	Sigar sigar = new Sigar();
+		Mem mem = null;
+	        try {
+	            mem = sigar.getMem();
+	        } catch (SigarException se) {
+	            se.printStackTrace();
+	        }
+
+	        System.out.println("Actual total free system memory: "
+	                + mem.getActualFree() / 1024 / 1024+ " MB");
+		
+//		return props.getProperty("OS")+":Memory is:"+mem.getActualFree();
+		return "Memory is:"+mem.getActualFree();
+
+	}
    
+	
+	
 }
