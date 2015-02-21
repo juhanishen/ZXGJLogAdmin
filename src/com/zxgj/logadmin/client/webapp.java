@@ -88,7 +88,7 @@ public class webapp implements EntryPoint {
 	    // Add it to the root panel.
 	    RootPanel.get("tabPanel").add(tp);
 	    
-	    logLevelService.testReadingPropertyFile(new AsyncCallback<String>(){
+	    logLevelService.readingServerMemory(new AsyncCallback<String>(){
 
 			@Override
 			public void onFailure(Throwable caught) {

@@ -60,19 +60,26 @@ public class LogLevelServiceImpl extends RemoteServiceServlet implements LogLeve
 	}
 
 	@Override
-	public String testReadingPropertyFile() throws IllegalArgumentException {
-//    	System.load("C:/sjj/project/ZXGJLogDemo/ZXGJLogAdmin/lib/sigar-amd64-winnt.dll");
-		System.load("/root/linuxConsole/lib/libsigar-amd64-linux.so");
-//		Properties props = new Properties();
-//		try {
-//			props.load(this.getClass().getResourceAsStream("batteryZXGJ.properties"));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		System.out.println("reading propery file succeeded:"+props.getProperty("LIB"));
-		
-		
+	public String readingServerMemory() throws IllegalArgumentException {
+//for windows:
+//		System.load("C:/sjj/project/ZXGJLogDemo/ZXGJLogAdmin/lib/sigar-amd64-winnt.dll");
+//for linux:		
+//		System.load("/root/linuxConsole/lib/libsigar-amd64-linux.so");
+		Properties props = new Properties();
+		try {
+			props.load(this.getClass().getClassLoader().getResourceAsStream("batteryZXGJ.properties"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("reading propery file succeeded:"+props.getProperty("LIB"));
+		String path="";
+		if(props.getProperty("OS").equalsIgnoreCase("Linux")){
+		   path = props.getProperty("LINUXLIB");
+		}else{
+		   path = props.getProperty("WINDOWSLIB");	
+		}
+		System.load(path);
     	Sigar sigar = new Sigar();
 		Mem mem = null;
 	        try {
@@ -84,9 +91,9 @@ public class LogLevelServiceImpl extends RemoteServiceServlet implements LogLeve
 	        System.out.println("Actual total free system memory: "
 	                + mem.getActualFree() / 1024 / 1024+ " MB");
 		
-//		return props.getProperty("OS")+":Memory is:"+mem.getActualFree();
-		return "Memory is:"+mem.getActualFree();
-
+		return props.getProperty("OS")+":Memory is:"+mem.getActualFree();
+//		return "Memory is:"+mem.getActualFree();
+//		return props.getProperty("OS");
 	}
    
 	

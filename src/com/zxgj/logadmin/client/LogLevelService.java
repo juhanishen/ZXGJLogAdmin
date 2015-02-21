@@ -8,5 +8,5 @@ import com.zxgj.logadmin.shared.EAPRecord;
 @RemoteServiceRelativePath("loglevel")
 public interface LogLevelService extends RemoteService {
 	EAPRecord[] getEAPRecords(String level) throws IllegalArgumentException;
-    String testReadingPropertyFile() throws IllegalArgumentException; 
+    String readingServerMemory() throws IllegalArgumentException; 
 }

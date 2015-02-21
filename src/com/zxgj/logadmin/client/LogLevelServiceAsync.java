@@ -6,5 +6,5 @@ import com.zxgj.logadmin.shared.EAPRecord;
 
 public interface LogLevelServiceAsync {
 	void getEAPRecords(String level, AsyncCallback<EAPRecord[]> callback) throws IllegalArgumentException;
-    void testReadingPropertyFile(AsyncCallback<String> callback) throws IllegalArgumentException;
+    void readingServerMemory(AsyncCallback<String> callback) throws IllegalArgumentException;
 }
