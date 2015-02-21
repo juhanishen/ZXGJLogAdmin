@@ -30,8 +30,9 @@ public class LogLevelServiceImpl extends RemoteServiceServlet implements LogLeve
 //		}else{
 //		   path = props.getProperty("WINDOWSLIB");	
 //		}
-		System.load("C:/sjj/project/ZXGJLogDemo/ZXGJLogAdmin/lib/sigar-amd64-winnt.dll");
-}
+//		System.load("C:/sjj/project/ZXGJLogDemo/ZXGJLogAdmin/lib/sigar-amd64-winnt.dll");
+	 System.load("/root/linuxConsole/lib/libsigar-amd64-linux.so");
+ }
 	
 	@Override
 	public EAPRecord[] getEAPRecords(String level) throws IllegalArgumentException {
