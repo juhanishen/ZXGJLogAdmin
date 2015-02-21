@@ -157,61 +157,61 @@ class SolarSystemCommand implements Command {
 		dialogVPanel.add(new HTML("<br/>Computer: "+cell+ "'s remote terminal is opened: Here one could manipulate remote computer logs</br>"));
 		dialogVPanel.add(new HTML("<br/>and do some remote operation, for example check memory and cpu usage...</br/>"));
 
+		
 		Button example = new Button("Check node Memory Usage"); 
-//        final RemoteConsoleManagPanel memoryPanel = new RemoteConsoleManagPanel(cell);
-//        memoryPanel.drawMemoryConsumption();
-//        dialogVPanel.add(memoryPanel);
+		
+		//memory plot 1 starts:
+		final Chart memoryChart = new Chart()
+		      .setType(Series.Type.SPLINE)
+		      .setChartTitleText("Free Memory Usage")
+		      .setMarginRight(5);
+        memoryChart.setWidth("450px");
+        memoryChart.setHeight("200px");
+   	 
+		final Series memorySeries = memoryChart.createSeries()
+		       .setName("memory usage (MB)")
+		       .setPoints(new Number[] { });
+		  
+		memoryChart.addSeries(memorySeries);
+		
+		final Timer t = new Timer() {
+		      private int i=0;	
+		      @Override
+		      public void run() {
+		    	 if(i< 20 ){ 
+		    	    logLevelService.readingServerMemory(new AsyncCallback<String>(){
+
+					    @Override
+					    public void onFailure(Throwable caught) {
+						    Window.alert("error"+caught.toString());
+						
+					    }
+
+					    @Override
+					    public void onSuccess(String result) {
+// 					  	Window.alert("result is:"+result);
+						    memorySeries.addPoint(Integer.valueOf(result));		       
+		    	            memoryChart.redraw();	
+		    	            i++;
+					    }
+		    			 
+		    	    });
+		    	    
+		    	 }
+		      }
+		    };
         
         example.addClickHandler(new ClickHandler() {
           public void onClick(ClickEvent event) {
-        	 dialogBox.setText("Here would be remote computer/node memory usage");
-        	 
-        	 
-        	 final Chart memoryChart = new Chart()
-  		      .setType(Series.Type.SPLINE)
-  		      .setChartTitleText("Free Memory Usage")
-  		      .setMarginRight(10);
-
-  		     final Series memorySeries = memoryChart.createSeries()
-  		       .setName("memory usage (MB)")
-  		       .setPoints(new Number[] {900,900,900});
-  		  
-  		     memoryChart.addSeries(memorySeries);
-  		     dialogVPanel.add(memoryChart);
-  		
-  		    final Timer t = new Timer() {
-  		      private int i=0;	
-  		      @Override
-  		      public void run() {
-  		    	 if(i< 20 ){ 
-  		    	    logLevelService.readingServerMemory(new AsyncCallback<String>(){
-
-  					    @Override
-  					    public void onFailure(Throwable caught) {
-  						    Window.alert("error"+caught.toString());
-  						
-  					    }
-
-  					    @Override
-  					    public void onSuccess(String result) {
- // 					  	Window.alert("result is:"+result);
-  						    memorySeries.addPoint(Integer.valueOf(result));		       
-  		    	            memoryChart.redraw();	
-  		    	            i++;
-  					    }
-  		    			 
-  		    	    });
-  		    	    
-  		    	 }
-  		      }
-  		    };
-  		    
+        	 dialogBox.setText("Here would be remote computer/node memory usage");   	
+  		     dialogVPanel.add(memoryChart); 		    
   		    t.scheduleRepeating(5000);
           }
         });
     	Button close = new Button("Close this diaglog");
     	close.addClickHandler(new ClickHandler() {
-          public void onClick(ClickEvent event) {        	
+          public void onClick(ClickEvent event) {
+        	 t.cancel(); 
              dialogBox.hide();
              image.setUrl("nodeTopology.gif"); 
           }
