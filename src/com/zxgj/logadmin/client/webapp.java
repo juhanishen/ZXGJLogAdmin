@@ -1,11 +1,12 @@
 package com.zxgj.logadmin.client;
 
+import java.util.Date;
+
 import org.moxieapps.gwt.highcharts.client.Chart;
 import org.moxieapps.gwt.highcharts.client.Series;
 
 import com.zxgj.logadmin.client.zxgj.AreaWidget;
 import com.zxgj.logadmin.client.zxgj.MapWidget;
-import com.zxgj.logadmin.client.zxgj.RemoteConsoleManagPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJEAPCommentPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJEAPEventPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJKnowledgePanel;
@@ -24,12 +25,17 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.LoadListener;
+import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.datepicker.client.DateBox;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -40,12 +46,16 @@ public class webapp implements EntryPoint {
 			.create(LogLevelService.class);		
   	
   final Image image = new Image(); 
+  
+  final TextBox tb = new TextBox();
   /**
    * This is the entry point method.
    */
   public void onModuleLoad() {
-	  
+ 
 	    TabPanel tp = new TabPanel();
+	    
+	    createSearchComponents(tp);
 	    
 	    createImageMap();
         
@@ -53,10 +63,7 @@ public class webapp implements EntryPoint {
 		ZXGJSECMainPanel secMainPanel = new ZXGJSECMainPanel();
 		secMainPanel.createComponents();
 		
-//		ZXGJEPSMainPanel epsMainPanel = new ZXGJEPSMainPanel();
-//		epsMainPanel.createLogClassificationTable();
-		
-		ZXGJSearchPanel searchPanel = new ZXGJSearchPanel();
+		ZXGJSearchPanel searchPanel = new ZXGJSearchPanel(tb);
 		searchPanel.createSearchComponents();
 		
 		ZXGJTimeSeriesPanel plotPanel = new ZXGJTimeSeriesPanel();
@@ -65,23 +72,22 @@ public class webapp implements EntryPoint {
 		ZXGJTimeSeriesPanelLargeAmountData plot2Panel = new ZXGJTimeSeriesPanelLargeAmountData();
 		plot2Panel.createPlotComponent();
 		
-		ZXGJEAPEventPanel eventPanel = new ZXGJEAPEventPanel();
+		ZXGJEAPEventPanel eventPanel = new ZXGJEAPEventPanel(tb);
 		eventPanel.createEventComponent();
 		
-		ZXGJEAPCommentPanel commentPanel = new ZXGJEAPCommentPanel();
+		ZXGJEAPCommentPanel commentPanel = new ZXGJEAPCommentPanel(tb);
 		commentPanel.createCommentComponent();
 		
 		ZXGJKnowledgePanel knowledgePanel = new ZXGJKnowledgePanel();
 		knowledgePanel.createKnowledgeComponent();
 		
-		
+	
 		tp.add(secMainPanel,"secMain");
-//	    tp.add(epsMainPanel, "epsMain");	
-	    tp.add(plotPanel, "时域分布图");
+	    tp.add(plotPanel, "时域分布图,Event plot");
 	    tp.add(plot2Panel, "zoomable plot");
 	    tp.add(searchPanel, "Search");	 
-	    tp.add(eventPanel,"EPAEvent");
-	    tp.add(commentPanel,"EPAComments");
+	    tp.add(eventPanel,"EAPEvent");
+	    tp.add(commentPanel,"EAPComments");
 	    tp.add(knowledgePanel,"专家系统 Expert system");
 	    
 	    //set parameters of tp:
@@ -94,6 +100,57 @@ public class webapp implements EntryPoint {
 	    RootPanel.get("tabPanel").add(tp);
 	    
   }
+
+private void createSearchComponents(TabPanel tp) {
+	VerticalPanel searchVP = new VerticalPanel();
+  
+	HorizontalPanel searchKeyPanel = new HorizontalPanel();
+	Label keyLabel = new Label("Search:");
+	searchKeyPanel.add(keyLabel);
+	tb.setWidth("800px");
+	searchKeyPanel.add(tb);	
+	
+	Label fromLabel = new Label("From");
+	fromLabel.setStyleName("searchPanelLable");
+	Label toLabel = new Label("To");
+	toLabel.setStyleName("searchPanelLable");
+	
+	DateBox startDateBox = new DateBox();
+	DateBox endDateBox = new DateBox();
+	startDateBox.setValue(new Date());
+	endDateBox.setValue(new Date());
+	startDateBox.setStyleName("searchDateBox");
+	endDateBox.setStyleName("searchDateBox");
+	
+	// Make some radio buttons, all in one group.
+	RadioButton rbEPA = new RadioButton("searchRadioGroup", "serach in EPA log file only");
+	RadioButton rbALL = new RadioButton("searchRadioGroup", "search in ALL log files");
+	rbEPA.setValue(true);
+	rbEPA.setStyleName("searchKeyButton");
+	rbALL.setStyleName("searchKeyButton");
+	
+	Button searchButton = new Button("Search");
+	searchButton.setStyleName("searchKeyButton");
+	
+	searchVP.add(searchKeyPanel);
+	
+	HorizontalPanel timePanel = new HorizontalPanel();
+	timePanel.add(fromLabel);
+	timePanel.add(startDateBox);
+	timePanel.add(toLabel);
+	timePanel.add(endDateBox);
+	searchVP.add(timePanel);
+
+	searchVP.add(searchButton);
+	
+	HorizontalPanel rbPanel = new HorizontalPanel();
+	rbPanel.add(rbEPA);
+	rbPanel.add(rbALL);
+	searchVP.add(rbPanel);
+	
+ // Add it to the root panel.
+	RootPanel.get("searchbox").add(searchVP);
+}
 
 private void createImageMap() {
     image.setUrl("nodeTopology.gif"); 

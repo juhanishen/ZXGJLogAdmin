@@ -26,9 +26,12 @@ import com.google.gwt.user.datepicker.client.DateBox;
 
 public class ZXGJSearchPanel extends VerticalPanel {
 	
+	private TextBox tb;
 	
-	
-    public ZXGJSearchPanel(){}
+    public ZXGJSearchPanel(TextBox tb){
+    	this.tb= tb;
+    	
+    }
     
     public void createSearchComponents(){
     	
@@ -56,16 +59,8 @@ public class ZXGJSearchPanel extends VerticalPanel {
 		 		      return true;
 		 		   }
 		 		});
-//			searchChart.removeSeries(searchSeries);
+
 			
-//			searchChart.getSeries("deviceId").addPoint(
-//					new Integer(400),true,true, new Animation().setDuration(100)
-//				       .setEasing(Animation.Easing.LINEAR));
-	
-    		Label keyLabel = new Label("Key Search:");
-    		keyLabel.setStyleName("searchPanelLable");
-			TextBox tb = new TextBox();	
-		   
 			Label fromLabel = new Label("From");
 			fromLabel.setStyleName("searchPanelLable");
 			Label toLabel = new Label("To");
@@ -123,24 +118,9 @@ public class ZXGJSearchPanel extends VerticalPanel {
 		    
 		    final VerticalPanel panel = new VerticalPanel();
 
-		    HorizontalPanel searchKeyPanel = new HorizontalPanel();
-		    searchKeyPanel.add(keyLabel);
-		    searchKeyPanel.add(tb);		    
-		    panel.add(searchKeyPanel);
+	
 		    
-		    HorizontalPanel timePanel = new HorizontalPanel();
-		    timePanel.add(fromLabel);
-		    timePanel.add(startDateBox);
-		    timePanel.add(toLabel);
-		    timePanel.add(endDateBox);
-		    panel.add(timePanel);
 
-		    panel.add(searchButton);
-		    
-		    HorizontalPanel rbPanel = new HorizontalPanel();
-		    rbPanel.add(rbEPA);
-		    rbPanel.add(rbALL);
-		    panel.add(rbPanel);
 		    
 		    panel.add(ta);
 		    HorizontalPanel hbuttons = new HorizontalPanel();

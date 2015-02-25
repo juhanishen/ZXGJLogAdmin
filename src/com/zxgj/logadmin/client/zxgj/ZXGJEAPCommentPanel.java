@@ -9,6 +9,7 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.zxgj.logadmin.client.EAPLogService;
@@ -19,8 +20,11 @@ public class ZXGJEAPCommentPanel extends VerticalPanel {
 	
 	private final EAPLogServiceAsync eapLogService = GWT
 			.create(EAPLogService.class);
+	private final TextBox tb;
 	
-	public ZXGJEAPCommentPanel(){}
+	public ZXGJEAPCommentPanel(TextBox tb){
+		this.tb = tb;
+	}
 	
 	public void createCommentComponent(){
 		// Create a CellTable.

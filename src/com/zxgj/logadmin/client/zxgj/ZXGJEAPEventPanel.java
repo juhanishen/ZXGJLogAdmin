@@ -5,11 +5,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.zxgj.logadmin.client.EAPLogService;
@@ -20,11 +20,14 @@ public class ZXGJEAPEventPanel extends VerticalPanel {
 
 	private final EAPLogServiceAsync eapLogService = GWT
 			.create(EAPLogService.class);
+	private TextBox tb;
 	
-	public ZXGJEAPEventPanel(){}
+	public ZXGJEAPEventPanel(TextBox tb){
+		this.tb= tb;
+	}
 	
 	public void createEventComponent(){
-		  final CellTable<EAPRecord> eventTable = new CellTable<EAPRecord>();
+		  final ZXGJCellTable<EAPRecord> eventTable = new ZXGJCellTable<EAPRecord>(tb);			  
 
 	 	    // Create name column.
 	 	   final TextColumn<EAPRecord> eventNameColumn = new TextColumn<EAPRecord>() {
@@ -131,6 +134,6 @@ public class ZXGJEAPEventPanel extends VerticalPanel {
 			 	    add(pager);
 			 	    add(eventTable);
 				}
-            });
+            });              
 	}
 }

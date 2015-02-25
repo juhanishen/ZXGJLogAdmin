@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.user.cellview.client.CellTable;
+import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -34,6 +35,7 @@ public class ZXGJSECMsgKeyValueTotalPanel extends VerticalPanel{
 	public void createMsgKeyValueTable() {
 		// Create a CellTable.
 	    final CellTable<SECMsgKeyValue> secMsgKeyValueTable = new CellTable<SECMsgKeyValue>();
+	    secMsgKeyValueTable.setRowCount(5);
 	    secMsgKeyValueTable.setTitle("Transaction timeout across all nodes"); 
 	    
 	    // Create name column.
@@ -67,6 +69,8 @@ public class ZXGJSECMsgKeyValueTotalPanel extends VerticalPanel{
 	    // Connect the table to the data provider.
 	    secMsgKeyValueDataProvider.addDataDisplay(secMsgKeyValueTable);
 
+	    final SimplePager pager = new SimplePager();
+ 	    pager.setDisplay(secMsgKeyValueTable);
 	    // Add the data to the data provider, which automatically pushes it to the
 	    // widget.
 	    
@@ -134,7 +138,9 @@ public class ZXGJSECMsgKeyValueTotalPanel extends VerticalPanel{
 					 	     secMsgKeyValueTable.getColumnSortList().push(keyValueCountColumn);
 
 						    // Add it to the root panel.
-						    add(secMsgKeyValueTable);		
+						    add(pager);
+					 	    add(secMsgKeyValueTable);	
+						    
 						
 						    
 					}
