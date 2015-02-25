@@ -9,11 +9,13 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.ListDataProvider;
 import com.zxgj.logadmin.client.SECLogService;
 import com.zxgj.logadmin.client.SECLogServiceAsync;
+import com.zxgj.logadmin.client.ZXGJClientConstants;
 import com.zxgj.logadmin.shared.SECMsgKeyValue;
 import com.zxgj.logadmin.shared.SECMsgKeyValuePerNode;
 import com.zxgj.logadmin.shared.ZXGJParserHelper;
@@ -27,16 +29,19 @@ public class ZXGJSECMsgKeyValueBreakDownPanel extends VerticalPanel{
 			.create(SECLogService.class);
 	final private ZXGJSECMainPanel secMainPanel;
 	final private String msgKeyValue;
+	private final TextBox tb;
 	
-	public ZXGJSECMsgKeyValueBreakDownPanel(ZXGJSECMainPanel secMainPanel,String msgKeyValue){
+	public ZXGJSECMsgKeyValueBreakDownPanel(ZXGJSECMainPanel secMainPanel,String msgKeyValue,TextBox tb){
 		this.secMainPanel = secMainPanel;
 		this.msgKeyValue = msgKeyValue;
+		this.tb=tb;
 		setTitle(msgKeyValue);
 	}
 	
     public void createBreakDownTableComponents(){
 		// Create a CellTable.
-	    final CellTable<SECMsgKeyValuePerNode> secNodeTimeoutPerNodeTable = new CellTable<SECMsgKeyValuePerNode>();
+	    final ZXGJSECCellTable<SECMsgKeyValuePerNode> secNodeTimeoutPerNodeTable = 
+	    		new ZXGJSECCellTable<SECMsgKeyValuePerNode>(tb,ZXGJClientConstants.SECMsgKeyValueBreakDownPanel);
 
 	    secNodeTimeoutPerNodeTable.setTitle("Transaction timeout per node"); 
 

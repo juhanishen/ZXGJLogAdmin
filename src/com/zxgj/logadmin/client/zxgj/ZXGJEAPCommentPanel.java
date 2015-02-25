@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.zxgj.logadmin.client.EAPLogService;
 import com.zxgj.logadmin.client.EAPLogServiceAsync;
+import com.zxgj.logadmin.client.ZXGJClientConstants;
 import com.zxgj.logadmin.shared.EAPRecord;
 
 public class ZXGJEAPCommentPanel extends VerticalPanel {
@@ -28,7 +29,8 @@ public class ZXGJEAPCommentPanel extends VerticalPanel {
 	
 	public void createCommentComponent(){
 		// Create a CellTable.
-	    final CellTable<EAPRecord> commentTable = new CellTable<EAPRecord>();
+	    final ZXGJEAPCellTable<EAPRecord> commentTable = 
+	    		new ZXGJEAPCellTable<EAPRecord>(tb,ZXGJClientConstants.EAPCommentPanel);
 
 	    // Create name column.
 	    final TextColumn<EAPRecord> commentNameColumn = new TextColumn<EAPRecord>() {

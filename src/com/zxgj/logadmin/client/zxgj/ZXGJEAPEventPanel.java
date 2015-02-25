@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.zxgj.logadmin.client.EAPLogService;
 import com.zxgj.logadmin.client.EAPLogServiceAsync;
+import com.zxgj.logadmin.client.ZXGJClientConstants;
 import com.zxgj.logadmin.shared.EAPRecord;
 
 public class ZXGJEAPEventPanel extends VerticalPanel {
@@ -27,7 +28,7 @@ public class ZXGJEAPEventPanel extends VerticalPanel {
 	}
 	
 	public void createEventComponent(){
-		  final ZXGJCellTable<EAPRecord> eventTable = new ZXGJCellTable<EAPRecord>(tb);			  
+		  final ZXGJEAPCellTable<EAPRecord> eventTable = new ZXGJEAPCellTable<EAPRecord>(tb,ZXGJClientConstants.EAPEventPanel);			  
 
 	 	    // Create name column.
 	 	   final TextColumn<EAPRecord> eventNameColumn = new TextColumn<EAPRecord>() {

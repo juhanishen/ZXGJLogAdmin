@@ -60,7 +60,7 @@ public class webapp implements EntryPoint {
 	    createImageMap();
         
 		
-		ZXGJSECMainPanel secMainPanel = new ZXGJSECMainPanel();
+		ZXGJSECMainPanel secMainPanel = new ZXGJSECMainPanel(tb);
 		secMainPanel.createComponents();
 		
 		ZXGJSearchPanel searchPanel = new ZXGJSearchPanel(tb);

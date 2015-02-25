@@ -10,11 +10,13 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.ListDataProvider;
 import com.zxgj.logadmin.client.SECLogService;
 import com.zxgj.logadmin.client.SECLogServiceAsync;
+import com.zxgj.logadmin.client.ZXGJClientConstants;
 import com.zxgj.logadmin.shared.LineNumberAndLineValue;
 import com.zxgj.logadmin.shared.SECMsgKeyValue;
 import com.zxgj.logadmin.shared.SECMsgKeyValuePerNode;
@@ -27,14 +29,17 @@ public class ZXGJSECMsgKeyValueTotalPanel extends VerticalPanel{
 	private final SECLogServiceAsync secLogService = GWT
 			.create(SECLogService.class);
 	final private ZXGJSECMainPanel secMainPanel;
+	final TextBox tb;
 	
-	public ZXGJSECMsgKeyValueTotalPanel(ZXGJSECMainPanel secMainPanel){
+	public ZXGJSECMsgKeyValueTotalPanel(ZXGJSECMainPanel secMainPanel,TextBox tb){
+		this.tb = tb;
 		this.secMainPanel = secMainPanel;
 	}
 
 	public void createMsgKeyValueTable() {
 		// Create a CellTable.
-	    final CellTable<SECMsgKeyValue> secMsgKeyValueTable = new CellTable<SECMsgKeyValue>();
+	    final ZXGJSECCellTable<SECMsgKeyValue> secMsgKeyValueTable = 
+	    		new ZXGJSECCellTable<SECMsgKeyValue>(tb,ZXGJClientConstants.SECMsgKeyValueTotalPanel);
 	    secMsgKeyValueTable.setRowCount(5);
 	    secMsgKeyValueTable.setTitle("Transaction timeout across all nodes"); 
 	    
@@ -160,7 +165,7 @@ public class ZXGJSECMsgKeyValueTotalPanel extends VerticalPanel{
 	                    }
 	                }
 	                if(!existed){
-	                    ZXGJSECMsgKeyValueBreakDownPanel breakDownPanel= new ZXGJSECMsgKeyValueBreakDownPanel(secMainPanel,value.getMsgKeyValue());
+	                    ZXGJSECMsgKeyValueBreakDownPanel breakDownPanel= new ZXGJSECMsgKeyValueBreakDownPanel(secMainPanel,value.getMsgKeyValue(),tb);
  	                    breakDownPanel.createBreakDownTableComponents();
 	                    secMainPanel.add(breakDownPanel);
 	                }

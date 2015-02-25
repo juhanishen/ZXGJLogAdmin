@@ -25,6 +25,11 @@ public class ZXGJSECMsgKeyValuePlotPanel extends VerticalPanel {
 	private final SECLogServiceAsync secLogService = GWT
 			.create(SECLogService.class);
 	
+	
+	public ZXGJSECMsgKeyValuePlotPanel(){
+		super();
+	}
+	
 	public void createPlotComponents(){
 		setWidth("400px");
 		setHeight("300px");
