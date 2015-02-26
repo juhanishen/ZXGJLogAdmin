@@ -46,6 +46,15 @@
     <url-pattern>/webapp/eaplog</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+    <servlet-name>searchService</servlet-name>
+    <servlet-class>com.zxgj.logadmin.server.SearchServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>searchService</servlet-name>
+    <url-pattern>/webapp/searchservice</url-pattern>
+  </servlet-mapping>
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>webapp2.html</welcome-file>

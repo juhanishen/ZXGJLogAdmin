@@ -1,9 +1,5 @@
 package com.zxgj.logadmin.client.zxgj;
 
-import java.util.Date;
-
-
-
 import org.moxieapps.gwt.highcharts.client.Chart;
 import org.moxieapps.gwt.highcharts.client.Series;
 import org.moxieapps.gwt.highcharts.client.events.ChartClickEvent;
@@ -11,29 +7,29 @@ import org.moxieapps.gwt.highcharts.client.events.ChartClickEventHandler;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.TextArea;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.datepicker.client.DateBox;
+import com.zxgj.logadmin.client.SearchService;
+import com.zxgj.logadmin.client.SearchServiceAsync;
 
 public class ZXGJSearchPanel extends VerticalPanel {
 	
-	private TextBox tb;
 	
-    public ZXGJSearchPanel(TextBox tb){
-    	this.tb= tb;
-    	
-    }
+	private final SearchServiceAsync searchService = GWT
+			.create(SearchService.class);		
+	
+    public ZXGJSearchPanel(){}
     
-    public void createSearchComponents(){
+    public void createSearchComponents(String searchQuery){
     	
     	
     	//search highcharts code are here: start:		
@@ -61,28 +57,7 @@ public class ZXGJSearchPanel extends VerticalPanel {
 		 		});
 
 			
-			Label fromLabel = new Label("From");
-			fromLabel.setStyleName("searchPanelLable");
-			Label toLabel = new Label("To");
-			toLabel.setStyleName("searchPanelLable");
-			
-		    DateBox startDateBox = new DateBox();
-		    DateBox endDateBox = new DateBox();
-		    startDateBox.setValue(new Date());
-		    endDateBox.setValue(new Date());
-		    startDateBox.setStyleName("searchDateBox");
-		    endDateBox.setStyleName("searchDateBox");
-		    
-		    // Make some radio buttons, all in one group.
-		    RadioButton rbEPA = new RadioButton("searchRadioGroup", "serach in EPA log file only");
-		    RadioButton rbALL = new RadioButton("searchRadioGroup", "search in ALL log files");
-		    rbEPA.setValue(true);
-		    rbEPA.setStyleName("searchKeyButton");
-		    rbALL.setStyleName("searchKeyButton");
-		    
-		    Button searchButton = new Button("Search");
-		    searchButton.setStyleName("searchKeyButton");   
-		    
+					    
 		    final Button showSearchResultChartButton = new Button("Show search result in chart");
 		    showSearchResultChartButton.setVisible(false);
 		    showSearchResultChartButton.setStyleName("searchKeyButton");
@@ -92,59 +67,46 @@ public class ZXGJSearchPanel extends VerticalPanel {
 		    
 		    final TextArea ta = new TextArea();
 		    ta.setStyleName("searchPanelAeaBox");
-		    ta.setCharacterWidth(35);
-		    ta.setVisibleLines(10);
+		    ta.setCharacterWidth(100);
+		    ta.setVisibleLines(20);
+		    
+		    final VerticalPanel panel = new VerticalPanel();
+		     
+		    searchService.getSearchResult(searchQuery, new AsyncCallback<String>(){
+				@Override
+				public void onFailure(Throwable caught) {
+					// TODO Auto-generated method stub
+					
+				}
 
-		   	    
-		    searchButton.addClickHandler(new ClickHandler() {
-		    	public  void onClick(ClickEvent event){
-		    	   	ta.setText("EPAlog1: [2014-08-23 10:59:58] [INFO] [CSEComPlugIn.Run] InvokeSECSEvent Mess"+"\n"
-                              +"EPAlog2: [2014-08-23 10:59:58] [INFO] [CSEComPlugIn.Run] IMTT02 received"+"\n"
-                              +"EPAlog3: [2014-08-23 10:59:58] [WARN] [SECSWrapper.InvokeSECSEvent] SECSWrapper Con");
-		    	   	showSearchResultChartButton.setVisible(true);
-		    	   	showSearchResultSequenceButton.setVisible(true);
-		    	}	    
-		    }); 
+				@Override
+				public void onSuccess(String result) {
+					// TODO Auto-generated method stub
+					ta.setText(result);
+					showSearchResultChartButton.setVisible(true);
+    	   	        showSearchResultSequenceButton.setVisible(true); 
+    	   	        
+    	   	       
+    	   	        panel.add(ta);
+    	   	        HorizontalPanel hbuttons = new HorizontalPanel();
+    	   	        hbuttons.add(showSearchResultChartButton);
+    	   	        hbuttons.add(showSearchResultSequenceButton);
+    	   	        panel.add(hbuttons);
+    	   	       add(panel);		
+				}
+		    });
 		    
 		    showSearchResultSequenceButton.addClickHandler(new ClickHandler() {
 		    	public  void onClick(ClickEvent event){
-		    	   	ta.setText("EPAlog1: [2014-08-23 10:59:58] [INFO] [CSEComPlugIn.Run] InvokeSECSEvent Mess"+"\n"
-                              +"EPAlog2: [2014-08-23 10:59:58] [INFO] [CSEComPlugIn.Run] IMTT02 received"+"\n"
-                              +"EPAlog3: [2014-08-23 10:59:58] [WARN] [SECSWrapper.InvokeSECSEvent] SECSWrapper Con");
 		    	   	showSearchResultChartButton.setVisible(true);
 		    	   	showSearchResultSequenceButton.setVisible(true);
 		    	}	    
 		    }); 
-		    
-		    final VerticalPanel panel = new VerticalPanel();
 
-	
-		    
-
-		    
-		    panel.add(ta);
-		    HorizontalPanel hbuttons = new HorizontalPanel();
-		    hbuttons.add(showSearchResultChartButton);
-		    hbuttons.add(showSearchResultSequenceButton);
-		    panel.add(hbuttons);
-		    
-		    
 		    final Timer t = new Timer() {
 			      @Override
 			      public void run() {
-// try 1 start			    	  
-//			    	  searchChart.removeSeries(searchSeries);
-//			    	  Point[] points = searchSeries.getPoints();
-//			    	  Point[] newPoints = new Point[points.length+2];
-//			    	  for(int i=0;i<points.length;i++){
-//			    		  newPoints[i] = points[i];
-//			    	  }
-//			    	  newPoints[points.length] = new Point(points[points.length-1].getX().intValue()+10,points[points.length-1].getY().intValue()-5);
-//			    	  newPoints[points.length+1] = new Point(points[points.length-2].getX().intValue()+8,points[points.length-2].getY().intValue()-3);
-//			    	  searchSeries.setPoints(newPoints);
-//			    	  searchChart.addSeries(searchSeries);
-//			    	  searchChart.redraw();
-// try 1 ends			    	  
+  	  
 			    	 highLimit.addPoint(500);
 			    	 lowLimit.addPoint(300);
 			    	 searchSeries.addPoint(450);
@@ -176,10 +138,6 @@ public class ZXGJSearchPanel extends VerticalPanel {
 		    	    panel.add(canvas);
 		    	}	    
 		    });
-		    
-		    add(panel);		
-		    
-
    }
     
     private void drawSequenceLine(final Context2d context2d){

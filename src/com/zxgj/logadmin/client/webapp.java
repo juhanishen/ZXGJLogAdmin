@@ -48,6 +48,8 @@ public class webapp implements EntryPoint {
   final Image image = new Image(); 
   
   final TextBox tb = new TextBox();
+  
+  final ZXGJSearchPanel searchPanel = new ZXGJSearchPanel();
   /**
    * This is the entry point method.
    */
@@ -63,10 +65,7 @@ public class webapp implements EntryPoint {
 		ZXGJSECMainPanel secMainPanel = new ZXGJSECMainPanel(tb);
 		secMainPanel.createComponents();
 		
-		ZXGJSearchPanel searchPanel = new ZXGJSearchPanel(tb);
-		searchPanel.createSearchComponents();
-		
-		ZXGJTimeSeriesPanel plotPanel = new ZXGJTimeSeriesPanel();
+    	ZXGJTimeSeriesPanel plotPanel = new ZXGJTimeSeriesPanel();
 		plotPanel.createPlotComponent();
 		
 		ZXGJTimeSeriesPanelLargeAmountData plot2Panel = new ZXGJTimeSeriesPanelLargeAmountData();
@@ -107,8 +106,11 @@ private void createSearchComponents(TabPanel tp) {
 	HorizontalPanel searchKeyPanel = new HorizontalPanel();
 	Label keyLabel = new Label("Search:");
 	searchKeyPanel.add(keyLabel);
-	tb.setWidth("800px");
+	tb.setWidth("900px");
 	searchKeyPanel.add(tb);	
+	
+	Label queryRemindLabel1 = new Label("1) Right click the table row, to select query");
+	Label queryRemindLabel2 = new Label("2) You could also make line:%your input% to make general search");
 	
 	Label fromLabel = new Label("From");
 	fromLabel.setStyleName("searchPanelLable");
@@ -123,16 +125,21 @@ private void createSearchComponents(TabPanel tp) {
 	endDateBox.setStyleName("searchDateBox");
 	
 	// Make some radio buttons, all in one group.
+	RadioButton rbSEC = new RadioButton("searchRadioGroup", "serach in SEC log file only");
 	RadioButton rbEPA = new RadioButton("searchRadioGroup", "serach in EPA log file only");
 	RadioButton rbALL = new RadioButton("searchRadioGroup", "search in ALL log files");
-	rbEPA.setValue(true);
+	rbALL.setValue(true);
 	rbEPA.setStyleName("searchKeyButton");
+	rbSEC.setStyleName("searchKeyButton");
 	rbALL.setStyleName("searchKeyButton");
 	
 	Button searchButton = new Button("Search");
 	searchButton.setStyleName("searchKeyButton");
 	
 	searchVP.add(searchKeyPanel);
+	
+	searchVP.add(queryRemindLabel1);
+	searchVP.add(queryRemindLabel2);
 	
 	HorizontalPanel timePanel = new HorizontalPanel();
 	timePanel.add(fromLabel);
@@ -144,13 +151,21 @@ private void createSearchComponents(TabPanel tp) {
 	searchVP.add(searchButton);
 	
 	HorizontalPanel rbPanel = new HorizontalPanel();
+	rbPanel.add(rbSEC);
 	rbPanel.add(rbEPA);
 	rbPanel.add(rbALL);
 	searchVP.add(rbPanel);
 	
  // Add it to the root panel.
 	RootPanel.get("searchbox").add(searchVP);
+	
+	searchButton.addClickHandler(new ClickHandler() {
+    	public  void onClick(ClickEvent event){
+    	    searchPanel.createSearchComponents(tb.getText());   		
+    	}	    
+    }); 
 }
+
 
 private void createImageMap() {
     image.setUrl("nodeTopology.gif"); 
