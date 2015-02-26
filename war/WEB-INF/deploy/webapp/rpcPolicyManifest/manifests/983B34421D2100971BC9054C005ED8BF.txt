@@ -1,0 +1,2 @@
+serviceClass: com.zxgj.logadmin.client.SearchService
+path: 474D6704AD1D2171B0C742F333116AB7.gwt.rpc

@@ -50,17 +50,16 @@ public class webapp implements EntryPoint {
   final TextBox tb = new TextBox();
   
   final ZXGJSearchPanel searchPanel = new ZXGJSearchPanel();
+  
+  final TabPanel tp = new TabPanel();
   /**
    * This is the entry point method.
    */
   public void onModuleLoad() {
  
-	    TabPanel tp = new TabPanel();
-	    
-	    createSearchComponents(tp);
-	    
 	    createImageMap();
-        
+	    
+	    createSearchComponents();       
 		
 		ZXGJSECMainPanel secMainPanel = new ZXGJSECMainPanel(tb);
 		secMainPanel.createComponents();
@@ -100,7 +99,7 @@ public class webapp implements EntryPoint {
 	    
   }
 
-private void createSearchComponents(TabPanel tp) {
+private void createSearchComponents() {
 	VerticalPanel searchVP = new VerticalPanel();
   
 	HorizontalPanel searchKeyPanel = new HorizontalPanel();
@@ -161,7 +160,8 @@ private void createSearchComponents(TabPanel tp) {
 	
 	searchButton.addClickHandler(new ClickHandler() {
     	public  void onClick(ClickEvent event){
-    	    searchPanel.createSearchComponents(tb.getText());   		
+    	    searchPanel.createSearchComponents(tb.getText()); 
+    	    tp.selectTab(3);
     	}	    
     }); 
 }
