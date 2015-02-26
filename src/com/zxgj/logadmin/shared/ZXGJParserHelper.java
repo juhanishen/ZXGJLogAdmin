@@ -67,7 +67,7 @@ public class ZXGJParserHelper {
     public static final String queryDetailLogEventsWithinSecond = "getDetailLogEventsWithinSecond";
     public static final String queryEAPGetAllComments = "getEAPAllComments";
     public static final String queryEAPGetAllEvents = "getEAPAllEvents";
-    
+    public static final String querySearch = "querySearch";
     
     
     public static final String TransactionTimeoutMsgKeyValue = "TransactionTimerTimeout";
@@ -79,7 +79,14 @@ public class ZXGJParserHelper {
 	public static final String paramLINENUM = "lineNum";
 	public static final String paramDate="UTCTime";
 	public static final String paramMsgKeyValue = "msgKeyValue";
+	public static final String paraQuery = "queryStr";
 
+	
+	public static final String queryClientMsgKeyValue="secMsgKey";
+	public static final String queryClientEAPCommentValue="commentKey";
+	public static final String queryClientEAPEventValue="eventKey";
+	public static final String queryClientNodeName="NodeNameKey";
+	public static final String queryClientLine = "lineKey";
 	
 	public static boolean doesLineStartWithDigit(String line){
 		return line.startsWith("0") || line.startsWith("1") ||

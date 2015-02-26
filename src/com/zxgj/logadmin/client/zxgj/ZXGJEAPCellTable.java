@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.zxgj.logadmin.client.ZXGJClientConstants;
+import com.zxgj.logadmin.shared.ZXGJParserHelper;
 
 public class ZXGJEAPCellTable<T> extends CellTable<T> {
 	private final TextBox tb;
@@ -35,9 +36,9 @@ public class ZXGJEAPCellTable<T> extends CellTable<T> {
 	            Command cmdAND = new Command() {
 	                public void execute() {
 	                	if(name.equalsIgnoreCase(ZXGJClientConstants.EAPEventPanel)){
-	    	                tb.setText(tb.getText().concat(" AND eventKey:"+searchKey));
+	    	                tb.setText(tb.getText().concat(" AND "+ZXGJParserHelper.queryClientEAPEventValue+":\""+searchKey+"\""));
 	                	}else{
-	                		tb.setText(tb.getText().concat(" AND commentKey:"+searchKey));
+	                		tb.setText(tb.getText().concat(" AND "+ZXGJParserHelper.queryClientEAPCommentValue+":\""+searchKey+"\""));
 	                	}
 	    	            pop.hide(true);
 	                }  
@@ -45,9 +46,9 @@ public class ZXGJEAPCellTable<T> extends CellTable<T> {
 	              Command cmdOR = new Command() {
 		                public void execute() {
 		                	if(name.equalsIgnoreCase(ZXGJClientConstants.EAPEventPanel)){
-		    	                tb.setText(tb.getText().concat(" OR eventKey:"+searchKey));
+		    	                tb.setText(tb.getText().concat(" OR "+ZXGJParserHelper.queryClientEAPEventValue+":\""+searchKey+"\""));
 		                	}else{
-		                		tb.setText(tb.getText().concat(" OR commentKey:"+searchKey));
+		                		tb.setText(tb.getText().concat(" OR "+ZXGJParserHelper.queryClientEAPCommentValue+":\""+searchKey+"\""));
 		                	}
 		    	            pop.hide(true);
 		                }  

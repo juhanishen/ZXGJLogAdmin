@@ -14,6 +14,7 @@ import com.zxgj.logadmin.client.zxgj.ZXGJSECMainPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJSearchPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJTimeSeriesPanel;
 import com.zxgj.logadmin.client.zxgj.ZXGJTimeSeriesPanelLargeAmountData;
+import com.zxgj.logadmin.shared.ZXGJParserHelper;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -109,7 +110,7 @@ private void createSearchComponents() {
 	searchKeyPanel.add(tb);	
 	
 	Label queryRemindLabel1 = new Label("1) Right click the table row, to select query");
-	Label queryRemindLabel2 = new Label("2) You could also make line:%your input% to make general search");
+	Label queryRemindLabel2 = new Label("2) You could also make "+ZXGJParserHelper.queryClientLine+":input% to make general search");
 	
 	Label fromLabel = new Label("From");
 	fromLabel.setStyleName("searchPanelLable");

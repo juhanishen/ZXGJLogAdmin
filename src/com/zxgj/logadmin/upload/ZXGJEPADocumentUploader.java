@@ -73,7 +73,7 @@ class EPAHandler implements Runnable {
 			   document.addField(ZXGJParserHelper.timestampField,solrTimeStamp);
 			   document.addField(ZXGJParserHelper.logLevelField,normalLineAttributes[1].trim().substring(1));
 			   document.addField(ZXGJParserHelper.normalLineEventField,normalLineAttributes[2].trim().substring(1));
-			   document.addField(ZXGJParserHelper.normalLineCommentField,normalLineAttributes[3].trim().substring(1));
+			   document.addField(ZXGJParserHelper.normalLineCommentField,normalLineAttributes[3].trim().substring(0));
 			}else if(line.startsWith(ZXGJParserHelper.lineBeginWithXML)){
 				
 			}else{

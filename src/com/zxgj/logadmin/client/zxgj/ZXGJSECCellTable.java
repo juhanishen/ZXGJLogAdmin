@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.zxgj.logadmin.client.ZXGJClientConstants;
+import com.zxgj.logadmin.shared.ZXGJParserHelper;
 
 public class ZXGJSECCellTable<T> extends CellTable<T> {
 	private final TextBox tb;
@@ -35,13 +36,11 @@ public class ZXGJSECCellTable<T> extends CellTable<T> {
 	                	
 	                	if(name.equalsIgnoreCase(ZXGJClientConstants.SECMsgKeyValueTotalPanel)){
 	                		String searchKey = DOM.getParent(td).getFirstChildElement().getInnerText();
-	                		tb.setText(tb.getText().concat(" AND secMsgKeyValue:"+searchKey));
+	                		tb.setText(tb.getText().concat(" AND "+ZXGJParserHelper.queryClientMsgKeyValue+":\""+searchKey+"\""));
 	                	}else{
 	                		String nodeName = DOM.getParent(DOM.getParent(td)).getFirstChildElement().getInnerText();
                             String searchKey = DOM.getParent(DOM.getParent(td)).getFirstChildElement().getNextSiblingElement().getInnerText();   
-	                		tb.setText(tb.getText().concat(" AND secMsgKeyValueKey:"+searchKey+" AND secMsgKeyValueNodeName:"+nodeName));
-//	                		tb.setText(tb.getText().concat(" AND secMsgKeyValue:"+nodeName));
-
+	                		tb.setText(tb.getText().concat(" AND "+ZXGJParserHelper.queryClientMsgKeyValue+":\""+searchKey+"\" AND "+ZXGJParserHelper.queryClientNodeName+":\""+nodeName+"\""));
 	                	}
 	    	            pop.hide(true);
 	                }  
@@ -50,13 +49,12 @@ public class ZXGJSECCellTable<T> extends CellTable<T> {
 		                public void execute() {
 		                	if(name.equalsIgnoreCase(ZXGJClientConstants.SECMsgKeyValueTotalPanel)){
 		                		String searchKey = DOM.getParent(td).getFirstChildElement().getInnerText();
-		    	                tb.setText(tb.getText().concat(" OR secMsgKeyValue:"+searchKey));
+		    	                tb.setText(tb.getText().concat(" OR ("+ZXGJParserHelper.queryClientMsgKeyValue+":\""+searchKey+"\""));
 		                	}else{
 		                		String nodeName = DOM.getParent(DOM.getParent(td)).getFirstChildElement().getInnerText();
 	                            String searchKey = DOM.getParent(DOM.getParent(td)).getFirstChildElement().getNextSiblingElement().getInnerText();   
-		                		tb.setText(tb.getText().concat(" OR (secMsgKeyValueKey:"+searchKey+" AND secMsgKeyValueNodeName:"+nodeName+" )"));
-//		                		tb.setText(tb.getText().concat(" OR secMsgKeyValue:"+nodeName));
-		                	}
+		                		tb.setText(tb.getText().concat(" OR ("+ZXGJParserHelper.queryClientMsgKeyValue+":"+searchKey+" AND "+ZXGJParserHelper.queryClientNodeName+":\""+nodeName+"\" )"));
+		                   	}
 		    	            pop.hide(true);
 		                }  
 		              };   

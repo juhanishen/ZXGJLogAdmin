@@ -3,6 +3,7 @@ package com.zxgj.logadmin.reading;
 import java.util.Map;
 
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrQuery.ORDER;
 
 import com.zxgj.logadmin.shared.ZXGJParserHelper;
 
@@ -112,7 +113,11 @@ public class SECQueryFactory {
          }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryEAPGetAllEvents)){
         	 query.setQuery("*:*");
         	 query.addFacetField(ZXGJParserHelper.normalLineEventField); 
-         }	         
+         }else if(name.equalsIgnoreCase(ZXGJParserHelper.querySearch)){
+        	 String queryStr = params.get(ZXGJParserHelper.paraQuery);
+        	 query.setQuery(queryStr);
+        	 query.addSort(ZXGJParserHelper.nodeNameField,ORDER.asc);
+         }
          return query;    	
     }        
 }
