@@ -25,28 +25,11 @@ public class SearchServiceImpl extends RemoteServiceServlet implements SearchSer
 	public String getSearchResult(String query) throws IllegalArgumentException {
 
     	SolrServer solr = new HttpSolrServer(SECLogServiceImpl.urlString);
-		String queryNormalized ="";
-		if(query.contains(ZXGJParserHelper.queryClientEAPCommentValue) 
-			 || query.contains(ZXGJParserHelper.queryClientEAPEventValue) 
-			 || query.contains(ZXGJParserHelper.queryClientMsgKeyValue)
-			 || query.contains(ZXGJParserHelper.queryClientNodeName)
-		){
-		    queryNormalized = query.replace(ZXGJParserHelper.queryClientEAPCommentValue, ZXGJParserHelper.normalLineCommentField)
-		    		                      .replace(ZXGJParserHelper.queryClientEAPEventValue, ZXGJParserHelper.normalLineEventField)
-		    		                      .replace(ZXGJParserHelper.queryClientMsgKeyValue,ZXGJParserHelper.secLineMessageKeyCodeValueField)
-		    		                      .replace(ZXGJParserHelper.queryClientNodeName, ZXGJParserHelper.nodeNameField);
-		}else{
-			queryNormalized = query.replace(ZXGJParserHelper.queryClientLine, ZXGJParserHelper.lineValueField);
-		}
-		if(queryNormalized.contains("(") || queryNormalized.contains(")")){
-		    queryNormalized = queryNormalized.replace("(","").replace(")", "").replaceAll("\"","").concat("*");
-		}
-		
 		StringBuffer sb = new StringBuffer();
-		sb.append(queryNormalized+"\n");
+		sb.append(query+"\n");
 		
 		Map<String,String> params =new HashMap<String,String>();
-		params.put(ZXGJParserHelper.paraQuery,queryNormalized);
+		params.put(ZXGJParserHelper.paraQuery,query);
 		
 		SolrQuery solrQuery = SECQueryFactory.getInstance().getQueryByName(
 				ZXGJParserHelper.querySearch,params);

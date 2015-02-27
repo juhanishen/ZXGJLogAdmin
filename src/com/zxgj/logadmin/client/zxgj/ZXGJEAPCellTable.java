@@ -36,19 +36,19 @@ public class ZXGJEAPCellTable<T> extends CellTable<T> {
 	            Command cmdAND = new Command() {
 	                public void execute() {
 	                	if(name.equalsIgnoreCase(ZXGJClientConstants.EAPEventPanel)){
-	    	                tb.setText(tb.getText().concat(" AND "+ZXGJParserHelper.queryClientEAPEventValue+":\""+searchKey+"\""));
+	                		refactorSearchKey(searchKey,ZXGJParserHelper.normalLineEventField,"AND");	    	                
 	                	}else{
-	                		tb.setText(tb.getText().concat(" AND "+ZXGJParserHelper.queryClientEAPCommentValue+":\""+searchKey+"\""));
+	                		refactorSearchKey(searchKey,ZXGJParserHelper.normalLineCommentField,"AND");
 	                	}
 	    	            pop.hide(true);
-	                }  
+	                }					
 	              };
 	              Command cmdOR = new Command() {
 		                public void execute() {
 		                	if(name.equalsIgnoreCase(ZXGJClientConstants.EAPEventPanel)){
-		    	                tb.setText(tb.getText().concat(" OR "+ZXGJParserHelper.queryClientEAPEventValue+":\""+searchKey+"\""));
+		                		refactorSearchKey(searchKey,ZXGJParserHelper.normalLineEventField,"OR");
 		                	}else{
-		                		tb.setText(tb.getText().concat(" OR "+ZXGJParserHelper.queryClientEAPCommentValue+":\""+searchKey+"\""));
+		                		refactorSearchKey(searchKey,ZXGJParserHelper.normalLineEventField,"OR");
 		                	}
 		    	            pop.hide(true);
 		                }  
@@ -69,6 +69,29 @@ public class ZXGJEAPCellTable<T> extends CellTable<T> {
 	            super.onBrowserEvent2(theEvent);
 	        }
 
+	}
+
+	protected void refactorSearchKey(final String searchKey,
+			final String keyField, final String Op) {
+		String newSearchKey=""; 
+		if(searchKey.contains("(") || searchKey.contains(")")){
+		    if(tb.getText().trim().length()<1){
+			    newSearchKey = searchKey.replace("(","").replace(")","").concat("*");
+		        tb.setText(tb.getText().concat(keyField+":"+newSearchKey));
+		    }else{
+			    newSearchKey = searchKey.replace("(","").replace(")","").concat("*");
+		        tb.setText(tb.getText().concat(" "+Op+" "+keyField+":"+newSearchKey));
+		    }
+		}else{		    
+		    if(tb.getText().trim().length()<1){
+		    	newSearchKey = searchKey.replaceAll("\"", "\\\\\"");
+		        tb.setText(tb.getText().concat(keyField+":\""+newSearchKey+"\""));
+		    }else{
+		    	newSearchKey = searchKey.replaceAll("\"", "\\\\\"");
+		        tb.setText(tb.getText().concat(" "+Op+" "+keyField+":\""+newSearchKey+"\""));
+		    }
+		}
+		
 	}
 	
 }

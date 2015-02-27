@@ -32,15 +32,14 @@ public class ZXGJSECCellTable<T> extends CellTable<T> {
 	        	final int top = DOM.getAbsoluteTop(td);
 	        	final PopupPanel pop = new PopupPanel();
 	            Command cmdAND = new Command() {
-	                public void execute() {
-	                	
+	                public void execute() {	                	
 	                	if(name.equalsIgnoreCase(ZXGJClientConstants.SECMsgKeyValueTotalPanel)){
 	                		String searchKey = DOM.getParent(td).getFirstChildElement().getInnerText();
-	                		tb.setText(tb.getText().concat(" AND "+ZXGJParserHelper.queryClientMsgKeyValue+":\""+searchKey+"\""));
+	                		refactorSearchKey(searchKey,ZXGJParserHelper.secLineMessageKeyCodeValueField,"AND","","");
 	                	}else{
 	                		String nodeName = DOM.getParent(DOM.getParent(td)).getFirstChildElement().getInnerText();
-                            String searchKey = DOM.getParent(DOM.getParent(td)).getFirstChildElement().getNextSiblingElement().getInnerText();   
-	                		tb.setText(tb.getText().concat(" AND "+ZXGJParserHelper.queryClientMsgKeyValue+":\""+searchKey+"\" AND "+ZXGJParserHelper.queryClientNodeName+":\""+nodeName+"\""));
+                            String searchKey = DOM.getParent(DOM.getParent(td)).getFirstChildElement().getNextSiblingElement().getInnerText();                              refactorSearchKey(searchKey,ZXGJParserHelper.secLineMessageKeyCodeValueField,"OR",ZXGJParserHelper.nodeNameField,nodeName);  
+                            refactorSearchKey(searchKey,ZXGJParserHelper.secLineMessageKeyCodeValueField,"AND",ZXGJParserHelper.nodeNameField,nodeName);  
 	                	}
 	    	            pop.hide(true);
 	                }  
@@ -49,12 +48,12 @@ public class ZXGJSECCellTable<T> extends CellTable<T> {
 		                public void execute() {
 		                	if(name.equalsIgnoreCase(ZXGJClientConstants.SECMsgKeyValueTotalPanel)){
 		                		String searchKey = DOM.getParent(td).getFirstChildElement().getInnerText();
-		    	                tb.setText(tb.getText().concat(" OR ("+ZXGJParserHelper.queryClientMsgKeyValue+":\""+searchKey+"\""));
+		                		refactorSearchKey(searchKey,ZXGJParserHelper.secLineMessageKeyCodeValueField,"OR","","");
 		                	}else{
 		                		String nodeName = DOM.getParent(DOM.getParent(td)).getFirstChildElement().getInnerText();
 	                            String searchKey = DOM.getParent(DOM.getParent(td)).getFirstChildElement().getNextSiblingElement().getInnerText();   
-		                		tb.setText(tb.getText().concat(" OR ("+ZXGJParserHelper.queryClientMsgKeyValue+":"+searchKey+" AND "+ZXGJParserHelper.queryClientNodeName+":\""+nodeName+"\" )"));
-		                   	}
+	                            refactorSearchKey(searchKey,ZXGJParserHelper.secLineMessageKeyCodeValueField,"OR",ZXGJParserHelper.nodeNameField,nodeName);  
+		                	}
 		    	            pop.hide(true);
 		                }  
 		              };   
@@ -76,4 +75,30 @@ public class ZXGJSECCellTable<T> extends CellTable<T> {
 
 	}
 	
+	protected void refactorSearchKey(final String searchKey,
+			final String keyField, final String Op,final String nodeNameField,String nodeName) {
+		String newSearchKey=""; 
+		if(searchKey.contains("(") || searchKey.contains(")")){
+		     if(tb.getText().trim().length()<1){
+		        newSearchKey = searchKey.replace("(","").replace(")","").concat("*");
+		        tb.setText(tb.getText().concat(keyField+":"+newSearchKey));
+		    }else{
+		        newSearchKey = searchKey.replace("(","").replace(")","").concat("*");
+		        tb.setText(tb.getText().concat(" "+Op+" "+keyField+":"+newSearchKey));
+    	    }
+		}else{
+		    if(tb.getText().trim().length()<1){
+		    	newSearchKey = searchKey.replaceAll("\"", "\\\"");
+		        tb.setText(tb.getText().concat(keyField+":\""+newSearchKey+"\""));
+		    }else{
+		    	newSearchKey = searchKey.replaceAll("\"", "\\\"");
+		        tb.setText(tb.getText().concat(" "+Op+" "+keyField+":\""+newSearchKey+"\""));
+		    }
+		}
+		
+		if(nodeNameField!=null && nodeNameField.length()>=1){
+			String nodeQuery = " AND "+nodeNameField+":\""+nodeName+"\"";
+			tb.setText(tb.getText().concat(nodeQuery));
+		}
+	}
 }

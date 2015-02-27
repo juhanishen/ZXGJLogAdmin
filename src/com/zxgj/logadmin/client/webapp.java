@@ -110,7 +110,9 @@ private void createSearchComponents() {
 	searchKeyPanel.add(tb);	
 	
 	Label queryRemindLabel1 = new Label("1) Right click the table row, to select query");
-	Label queryRemindLabel2 = new Label("2) You could also make "+ZXGJParserHelper.queryClientLine+":input% to make general search");
+	Label queryRemindLabel2 = new Label("2) if query has *, do not put double quotation mark (\"), otherwise always put double quotation mark");
+	Label queryRemindLabel3 = new Label("3) genernal search using lineValue_s:xxx");
+	Label queryRemindLable4 = new Label("4) if quotation has another quotation inside, please use \\\" instead of \"");
 	
 	Label fromLabel = new Label("From");
 	fromLabel.setStyleName("searchPanelLable");
@@ -140,6 +142,8 @@ private void createSearchComponents() {
 	
 	searchVP.add(queryRemindLabel1);
 	searchVP.add(queryRemindLabel2);
+	searchVP.add(queryRemindLabel3);
+	searchVP.add(queryRemindLable4);
 	
 	HorizontalPanel timePanel = new HorizontalPanel();
 	timePanel.add(fromLabel);
