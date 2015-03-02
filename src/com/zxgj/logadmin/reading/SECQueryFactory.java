@@ -40,7 +40,8 @@ public class SECQueryFactory {
         	 int offset = Integer.parseInt(params.get(ZXGJParserHelper.paramOFFSET));
              long lineNum = Long.parseLong(params.get(ZXGJParserHelper.paramLINENUM));      	 
         	 query.setQuery("*:*");
-        	 query.setFilterQueries(ZXGJParserHelper.nodeNameField+":"+nodeName, ZXGJParserHelper.lineNumField+":[ "+Math.max(0,lineNum-offset)+ " TO " + (lineNum+offset)+" ]");  
+        	 query.setFilterQueries(ZXGJParserHelper.nodeNameField+":"+nodeName, ZXGJParserHelper.lineNumField+":[ "+Math.max(0,lineNum-offset)+ " TO " + (lineNum+offset)+" ]"); 
+        	 query.setSort(ZXGJParserHelper.lineNumField, ORDER.asc);
          }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetMsgKeyValueLinesByNode)){
         	 String nodeName = params.get(ZXGJParserHelper.nodeNameField);
         	 String msgKeyValue = params.get(ZXGJParserHelper.paramMsgKeyValue);
