@@ -42,8 +42,8 @@ public class ZXGJTimeSeriesPanel extends VerticalPanel {
 	
 	public Chart createChart(){
 		final TextArea ta= new TextArea();
-	    ta.setWidth("400px");
-	    ta.setHeight("300px");
+	    ta.setWidth("800px");
+	    ta.setHeight("500px");
 		
         final Chart chart = new Chart()  
         .setZoomType(Chart.ZoomType.X)  

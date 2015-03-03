@@ -94,7 +94,7 @@ public class ZXGJSECNodeMsgKeyValueLinesPanel extends VerticalPanel {
 	    hPanel.add(offsetsLB);
 	    
 	    final TextArea ta = new TextArea();
-	    ta.setWidth("500px");
+	    ta.setWidth("800px");
 	    ta.setHeight("400px");
 	    
 	    secLogService.getMsgKeyValueLinesByNode(msgKeyValue,

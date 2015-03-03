@@ -47,6 +47,7 @@ class SECHandler implements Runnable {
 			SolrInputDocument document = new SolrInputDocument();
 			document.addField( ZXGJParserHelper.IDField, 
 					String.valueOf(UploadingHelper.idGenerator.getAndIncrement())+Calendar.getInstance().getTimeInMillis());
+			document.addField( ZXGJParserHelper.fileTypeField,ZXGJParserHelper.FileTypeEnumSEC);
 		    String[] strs = line.trim().split(ZXGJParserHelper.space);
 		    System.out.println("in document Uploader: strs length is"+strs.length);
 			if(strs.length >= 1 && strs[1].equalsIgnoreCase(ZXGJParserHelper.SEND)){

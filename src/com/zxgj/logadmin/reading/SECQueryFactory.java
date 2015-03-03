@@ -40,7 +40,7 @@ public class SECQueryFactory {
         	 int offset = Integer.parseInt(params.get(ZXGJParserHelper.paramOFFSET));
              long lineNum = Long.parseLong(params.get(ZXGJParserHelper.paramLINENUM));      	 
         	 query.setQuery("*:*");
-        	 query.setFilterQueries(ZXGJParserHelper.nodeNameField+":"+nodeName, ZXGJParserHelper.lineNumField+":[ "+Math.max(0,lineNum-offset)+ " TO " + (lineNum+offset)+" ]"); 
+        	 query.setFilterQueries(ZXGJParserHelper.nodeNameField+":"+nodeName, ZXGJParserHelper.lineNumField+":[ "+Math.max(0,lineNum-offset)+ " TO " + (lineNum+offset)+" ]",ZXGJParserHelper.fileTypeField+":"+ZXGJParserHelper.FileTypeEnumSEC); 
         	 query.setSort(ZXGJParserHelper.lineNumField, ORDER.asc);
          }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryGetMsgKeyValueLinesByNode)){
         	 String nodeName = params.get(ZXGJParserHelper.nodeNameField);
@@ -103,11 +103,12 @@ public class SECQueryFactory {
                   sec=0;
                 }
                 sec++;
-            }
+            }	
          }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryDetailLogEventsWithinSecond)){
              String date = params.get(ZXGJParserHelper.paramDate);
         	 query.setQuery("*:*");
-        	 query.setFilterQueries(ZXGJParserHelper.secLineTimeStampField+": ["+date+"-1SECOND"+" TO "+date+"+1SECOND ]");
+        	 query.setFilterQueries(ZXGJParserHelper.secLineTimeStampField+": ["+date+"-1SECOND"+" TO "+date+"+1SECOND ]",ZXGJParserHelper.fileTypeField+":"+ZXGJParserHelper.FileTypeEnumSEC,ZXGJParserHelper.nodeNameField+":"+ZXGJParserHelper.NodeName1);
+        	 query.setSort(ZXGJParserHelper.lineNumField,ORDER.asc);
          }else if(name.equalsIgnoreCase(ZXGJParserHelper.queryEAPGetAllComments)){
         	 query.setQuery("*:*");
         	 query.addFacetField(ZXGJParserHelper.normalLineCommentField); 

@@ -19,14 +19,14 @@ import com.zxgj.logadmin.shared.ZXGJParserHelper;
 
 public class ZXGJEAPFileReader implements Runnable {
 	
-	private ZXGJEPADocumentUploader uploader;
+	private ZXGJEAPDocumentUploader uploader;
 	private SolrServer solr;
 	private String nodeName;
 	private String fileName;
 	
 	public ZXGJEAPFileReader(String nodeName,String fileName){
 		this.solr = new HttpSolrServer(UploadingHelper.urlString);;
-		this.uploader = new ZXGJEPADocumentUploader(solr);
+		this.uploader = new ZXGJEAPDocumentUploader(solr);
 		this.nodeName = nodeName;
 		this.fileName = fileName;
 	}	

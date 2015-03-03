@@ -17,7 +17,7 @@ public class ZXGJParserHelper {
 	public static final String secLineLeftLineField = "secLineExtra_s";
 	public static final String nodeNameField = "nodeName_s";
 	
-	public static final String fileTypeField = "fileType";
+	public static final String fileTypeField = "fileType_s";
 	public static final String lineNumField = "lineNum_l";
 	public static final String recordNumField = "recordNum_l";
 	public static final String lineTypeField = "lineType_s";
@@ -87,6 +87,9 @@ public class ZXGJParserHelper {
 	public static final String queryClientEAPEventValue="eventKey";
 	public static final String queryClientNodeName="NodeNameKey";
 	public static final String queryClientLine = "lineKey";
+	
+	public static final String FileTypeEnumSEC = "SEC";
+	public static final String FileTypeEnumEAP = "EAP";
 	
 	public static boolean doesLineStartWithDigit(String line){
 		return line.startsWith("0") || line.startsWith("1") ||
